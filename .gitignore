@@ -1,0 +1,8 @@
+*.mp4
+*.m4a
+*.pptx
+*.pdf
+*.docx
+.DS_Store
+node_modules/
+.claude/
