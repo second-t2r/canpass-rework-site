@@ -2,29 +2,92 @@
 <html lang="ja"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow,noarchive">
-<title>CanPass ・ 関係者限定</title>
+<title>CanPass ・ 関係者限定ポータル</title>
 <style>
-:root{--brand:#1E5BC6;--accent:#D9744A;--ink:#1A1A1A;--gray:#9AA0A6;}
+:root{--brand:#1E5BC6;--accent:#D9744A;--ink:#1A2230;--gray:#71808F;--line:#E3E8EF;--bg:#F5F7FB;--card:#fff;--navy:#11243B;--green:#1AA06A;}
 *{margin:0;box-sizing:border-box;}
-html,body{height:100%;font-family:-apple-system,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#F5F7FB;color:var(--ink);}
-#g{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;}
-.box{width:420px;max-width:90vw;background:#fff;border-radius:16px;box-shadow:0 18px 50px rgba(28,61,29,.12);padding:44px 40px;text-align:center;}
+html,body{background:var(--bg);color:var(--ink);font-family:-apple-system,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;-webkit-font-smoothing:antialiased;line-height:1.6;}
+.wrap{max-width:920px;margin:0 auto;padding:46px 20px 80px;}
+.head{display:flex;align-items:center;gap:16px;border-bottom:3px solid var(--brand);padding-bottom:20px;}
 .bn{font-size:40px;font-weight:900;letter-spacing:-.02em;}
-.rule{width:52px;height:5px;background:var(--accent);border-radius:3px;margin:16px auto 22px;}
-.lead{font-size:14px;color:var(--gray);margin-bottom:28px;line-height:1.6;}
-a.btn{display:block;text-decoration:none;font-size:16px;font-weight:700;padding:15px;border-radius:11px;margin-top:12px;}
-a.p{background:var(--brand);color:#fff;}
-a.s{background:#fff;color:var(--brand);border:1.5px solid #C9D6F0;}
-.foot{font-size:11px;color:var(--gray);margin-top:26px;}
+.bn .i{color:var(--brand);}
+.htext .t{font-size:15px;font-weight:800;color:var(--navy);}
+.htext .s{font-size:12.5px;color:var(--gray);margin-top:2px;}
+.lead{font-size:13.5px;color:var(--gray);margin:18px 0 26px;line-height:1.7;}
+.sec{margin-top:30px;}
+.sec h2{font-size:14px;font-weight:800;color:var(--navy);letter-spacing:.04em;display:flex;align-items:center;gap:10px;margin-bottom:4px;}
+.sec h2 .dot{width:10px;height:10px;border-radius:3px;background:var(--brand);}
+.sec .sub{font-size:12px;color:var(--gray);margin-bottom:12px;}
+.pw{display:inline-block;font-size:10.5px;font-weight:700;color:#9c4a26;background:#FCEDE5;border-radius:999px;padding:2px 9px;margin-left:4px;}
+.open{color:#176a48;background:#E5F4ED;}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+a.card{display:block;text-decoration:none;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--brand);border-radius:12px;padding:15px 17px;transition:.15s;box-shadow:0 2px 8px rgba(20,50,90,.04);}
+a.card:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(20,50,90,.10);border-left-color:var(--accent);}
+a.card .ti{font-size:15px;font-weight:700;color:var(--navy);}
+a.card .de{font-size:12px;color:var(--gray);margin-top:5px;line-height:1.5;}
+a.card.acc{border-left-color:var(--accent);}
+a.card.grn{border-left-color:var(--green);}
+.full{grid-column:1 / -1;}
+.foot{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-size:11.5px;color:var(--gray);line-height:1.7;}
+@media(max-width:620px){.grid{grid-template-columns:1fr;}.bn{font-size:32px;}}
 </style></head><body>
-<div id="g"><div class="box">
-  <div class="bn">CanPass</div><div class="rule"></div>
-  <div class="lead">関係者限定の資料です。<br>各資料はパスワードで保護されています。</div>
-  <a class="btn p" href="integrated-bizplan.html">i CanPass 統合事業計画書（本体＋Re:Work＋Re:Work AI）</a>
-  <a class="btn s" href="revenue-model.html">収益モデル・3年P/L 試算</a>
-  <a class="btn s" href="icanpass-bizplan.html">i CanPass 事業計画書（本体）</a>
-  <a class="btn s" href="bizplan.html">Re:Work 事業計画書</a>
-  <a class="btn s" href="salessheet.html">Re:Work セールスシート</a>
-  <div class="foot">社外秘 / L2機密 ・ 2026</div>
-</div></div>
+<div class="wrap">
+
+  <div class="head">
+    <div class="bn"><span class="i">i</span> CanPass</div>
+    <div class="htext">
+      <div class="t">関係者限定ポータル</div>
+      <div class="s">i CanPass ／ Re:Work ／ Re:Work AI ・ 社外秘（L2機密）</div>
+    </div>
+  </div>
+
+  <div class="lead">CanPass 関連の資料への入口です。<span class="pw">PW</span> 付きの資料はパスワードで保護されています（パスワードは別途共有）。リンクは推測されにくいだけでアクセス制御ではないため、URL・パスワードの共有先にご留意ください。</div>
+
+  <!-- 事業計画・財務 -->
+  <div class="sec">
+    <h2><span class="dot"></span>事業計画・財務 <span class="pw">PW</span></h2>
+    <div class="sub">経営・出資向け（canpass-rework-site）</div>
+    <div class="grid">
+      <a class="card full" href="integrated-bizplan.html"><div class="ti">i CanPass 統合事業計画書</div><div class="de">本体 ＋ Re:Work ＋ Re:Work AI ＋ 収益モデル を統合（最新・推奨）</div></a>
+      <a class="card" href="revenue-model.html"><div class="ti">収益モデル・3年P/L 試算</div><div class="de">P/L・ユニットエコノミクス・3シナリオ</div></a>
+      <a class="card" href="icanpass-bizplan.html"><div class="ti">i CanPass 事業計画書（本体）</div><div class="de">経営実行＋資金調達</div></a>
+      <a class="card" href="bizplan.html"><div class="ti">Re:Work 事業計画書</div><div class="de">復職支援サービス単体</div></a>
+      <a class="card" href="salessheet.html"><div class="ti">Re:Work セールスシート</div><div class="de">顧客・人事向け</div></a>
+    </div>
+  </div>
+
+  <!-- 自治体・B2G -->
+  <div class="sec">
+    <h2><span class="dot" style="background:var(--accent)"></span>自治体・B2G <span class="pw">PW</span></h2>
+    <div class="sub">自治体向けサービス提案（canpass-b2g-site）</div>
+    <div class="grid">
+      <a class="card acc full" href="https://second-t2r.github.io/canpass-b2g-site/"><div class="ti">CanPass 自治体向けサービス提案</div><div class="de">B2G戦略・自治体導入提案スライド（たたき）</div></a>
+    </div>
+  </div>
+
+  <!-- 研修・運用 -->
+  <div class="sec">
+    <h2><span class="dot" style="background:var(--accent)"></span>研修・運用 <span class="pw">PW</span></h2>
+    <div class="sub">研修・運用資料（canpass-training-site）</div>
+    <div class="grid">
+      <a class="card acc" href="https://second-t2r.github.io/canpass-training-site/"><div class="ti">研修・運用資料（入口）</div><div class="de">一覧ページ</div></a>
+      <a class="card acc" href="https://second-t2r.github.io/canpass-training-site/worker.html"><div class="ti">はたらき方研修（ワーカー向け）</div><div class="de">全31枚</div></a>
+      <a class="card acc full" href="https://second-t2r.github.io/canpass-training-site/admin.html"><div class="ti">運用ガイド（PM/運用向け）</div><div class="de">全33枚・L2</div></a>
+    </div>
+  </div>
+
+  <!-- 一般公開 -->
+  <div class="sec">
+    <h2><span class="dot" style="background:var(--green)"></span>一般公開 <span class="pw open">公開</span></h2>
+    <div class="sub">どなたでも閲覧可</div>
+    <div class="grid">
+      <a class="card grn full" href="https://canpass.jp/"><div class="ti">CanPass 公式LP</div><div class="de">canpass.jp（一般公開）</div></a>
+    </div>
+  </div>
+
+  <div class="foot">
+    社外秘 / L2機密 ・ 2026 ／ i CanPass ・ Re:Work / Re:Work AI<br>
+    ※ 限定URL＋PWは "推測されにくい・JSゲート" であり真のアクセス制御ではありません。医療系の生データ・実名・原本は各リポジトリに含めません（符号運用）。
+  </div>
+</div>
 </body></html>
