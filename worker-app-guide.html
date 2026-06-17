@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="ja"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>CanPass ワーカーアプリ ・ 体験ガイド</title>
+<style>
+:root{--brand:#1E5BC6;--accent:#D9744A;--ink:#1A2230;--gray:#71808F;--line:#E3E8EF;--bg:#F5F7FB;--card:#fff;--navy:#11243B;--green:#1AA06A;--canpassgreen:#2C5F2D;}
+*{margin:0;box-sizing:border-box;}
+html,body{background:var(--bg);color:var(--ink);font-family:-apple-system,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;-webkit-font-smoothing:antialiased;line-height:1.7;}
+.wrap{max-width:760px;margin:0 auto;padding:42px 20px 80px;}
+.head{display:flex;align-items:center;gap:16px;border-bottom:3px solid var(--brand);padding-bottom:18px;}
+.bn{font-size:34px;font-weight:900;letter-spacing:-.02em;}
+.bn .i{color:var(--brand);}
+.htext .t{font-size:15px;font-weight:800;color:var(--navy);}
+.htext .s{font-size:12.5px;color:var(--gray);margin-top:2px;}
+.lead{font-size:14px;color:var(--gray);margin:18px 0 8px;}
+.back{display:inline-block;font-size:12.5px;color:var(--brand);text-decoration:none;margin-top:10px;font-weight:700;}
+
+/* 始めるカード */
+.start{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;margin:24px 0;box-shadow:0 2px 10px rgba(20,50,90,.05);}
+.start h2{font-size:17px;color:var(--navy);margin-bottom:14px;display:flex;align-items:center;gap:9px;}
+.start h2 .dot{width:11px;height:11px;border-radius:3px;background:var(--canpassgreen);}
+.startgrid{display:flex;gap:22px;align-items:center;flex-wrap:wrap;}
+.qr{width:160px;height:160px;border:1px solid var(--line);border-radius:12px;padding:8px;background:#fff;flex:0 0 auto;}
+.startinfo{flex:1;min-width:230px;}
+.url{display:inline-block;font-size:14px;font-weight:700;color:var(--brand);word-break:break-all;text-decoration:none;background:#EEF3FC;border-radius:8px;padding:7px 11px;}
+.cred{margin-top:14px;font-size:13.5px;}
+.cred b{display:inline-block;min-width:74px;color:var(--gray);font-weight:600;}
+.cred code{background:#F0F2F6;border-radius:6px;padding:2px 8px;font-size:13.5px;font-weight:700;color:var(--ink);}
+.demo{display:inline-block;font-size:11px;font-weight:800;color:#9c4a26;background:#FCEDE5;border-radius:999px;padding:3px 10px;margin-left:6px;vertical-align:middle;}
+
+/* ステップ */
+.step{display:flex;gap:20px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin:16px 0;box-shadow:0 2px 8px rgba(20,50,90,.04);}
+.step .ph{flex:0 0 auto;width:200px;}
+.step .ph img{width:200px;border-radius:18px;border:5px solid #1b2230;box-shadow:0 6px 18px rgba(20,50,90,.18);display:block;}
+.step .bd{flex:1;min-width:200px;}
+.num{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:var(--brand);color:#fff;font-weight:800;font-size:15px;}
+.step h3{display:flex;align-items:center;gap:10px;font-size:17px;color:var(--navy);margin-bottom:8px;}
+.step p{font-size:13.8px;color:#41505e;margin:6px 0;}
+.step ul{margin:6px 0 0;padding-left:20px;}
+.step li{font-size:13.5px;color:#41505e;margin:4px 0;}
+.tag{display:inline-block;font-size:11px;font-weight:700;color:var(--canpassgreen);background:#E9F1E9;border-radius:6px;padding:2px 8px;margin:2px 4px 2px 0;}
+
+.sec{margin-top:34px;}
+.sec h2{font-size:16px;color:var(--navy);display:flex;align-items:center;gap:9px;margin-bottom:12px;}
+.sec h2 .dot{width:10px;height:10px;border-radius:3px;background:var(--brand);}
+.box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;}
+.box h4{font-size:14px;color:var(--navy);margin:12px 0 4px;}
+.box h4:first-child{margin-top:0;}
+.box p,.box li{font-size:13.5px;color:#41505e;}
+.box ul{padding-left:20px;margin:4px 0;}
+.note{background:#FFF8EE;border:1px solid #F3E2C2;border-radius:14px;padding:16px 20px;font-size:13.5px;color:#6b5526;}
+.note b{color:#8a6d00;}
+
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px;}
+.btn{flex:1;min-width:200px;text-align:center;text-decoration:none;border-radius:14px;padding:16px;font-size:15px;font-weight:800;}
+.btn.primary{background:var(--canpassgreen);color:#fff;}
+.btn.sub{background:#fff;color:var(--brand);border:2px solid var(--brand);}
+
+.foot{margin-top:42px;padding-top:16px;border-top:1px solid var(--line);font-size:11.5px;color:var(--gray);line-height:1.7;}
+@media(max-width:560px){.step{flex-direction:column;align-items:center;}.step .ph{width:240px;}.step .ph img{width:240px;}.step .bd{width:100%;}.bn{font-size:28px;}}
+</style></head><body>
+<div class="wrap">
+
+  <div class="head">
+    <div class="bn"><span class="i">i</span> CanPass</div>
+    <div class="htext">
+      <div class="t">ワーカーアプリ ・ 体験ガイド</div>
+      <div class="s">人 × AI で働く ・ スマホで体験 ・ 社外秘（L2機密）</div>
+    </div>
+  </div>
+
+  <div class="lead">
+    CanPass のワーカー向けアプリ（デモ版）をスマホで体験するためのガイドです。<br>
+    アプリを開いて「やりたいこと」を書くと、裏でAI（Claude）が手伝い、作業の記録が自動でたまります。
+  </div>
+  <a class="back" href="index.html">← 関係者限定ポータルへ戻る</a>
+
+  <!-- 1分で始める -->
+  <div class="start">
+    <h2><span class="dot"></span>1分で始める</h2>
+    <div class="startgrid">
+      <img class="qr" src="assets/worker-app/qr.png" alt="アプリのQRコード">
+      <div class="startinfo">
+        <p style="font-size:13px;color:var(--gray);margin-bottom:8px;">スマホのカメラでQRを読み取るか、下のURLを開いてください。</p>
+        <a class="url" href="https://worker-app-sooty.vercel.app" target="_blank" rel="noopener">worker-app-sooty.vercel.app</a>
+        <div class="cred">
+          <div><b>符号</b> <code>worker-test</code></div>
+          <div style="margin-top:6px;"><b>パスコード</b> <code>canpass</code> <span class="demo">体験用</span></div>
+        </div>
+        <p style="font-size:12px;color:var(--gray);margin-top:12px;">※ これは体験用のデモです。実際の業務では一人ひとり専用の符号・パスコードを発行します。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ステップ -->
+  <div class="step">
+    <div class="ph"><img src="assets/worker-app/01-login.png" alt="ログイン画面"></div>
+    <div class="bd">
+      <h3><span class="num">1</span>ログインする</h3>
+      <p>「符号」に <code>worker-test</code>、「パスコード」に <code>canpass</code> を入れて〔ログイン〕を押します。</p>
+      <p>実名は使いません。符号（worker-◯）で管理するので安心です。</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="ph"><img src="assets/worker-app/02-checkin.png" alt="体調チェックイン画面"></div>
+    <div class="bd">
+      <h3><span class="num">2</span>体調をチェックイン</h3>
+      <p>体調・気分・痛み・疲労度を 1〜5 で選びます。正直な数字でOKです。</p>
+      <ul>
+        <li>つらい日は低い数字でだいじょうぶ。</li>
+        <li>体調が低い日は「軽い作業でOK」と案内が出ます。</li>
+        <li>記録は、無理のない仕事の割り振りや引き継ぎに役立ちます。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="ph"><img src="assets/worker-app/03-work.png" alt="作業の種類を選ぶ画面"></div>
+    <div class="bd">
+      <h3><span class="num">3</span>やることを選ぶ</h3>
+      <p>割り当てられた作業の種類をタップします。デモでは6種類から選べます。</p>
+      <div>
+        <span class="tag">✍️ 文章・SNS下書き</span><span class="tag">🔎 リサーチ・整理</span>
+        <span class="tag">📊 データ入力・表整理</span><span class="tag">📝 文字起こしの整え</span>
+        <span class="tag">✉️ 返信の下書き</span><span class="tag">🌐 やさしい日本語・翻訳</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="ph"><img src="assets/worker-app/04-chat.png" alt="AIチャット画面"></div>
+    <div class="bd">
+      <h3><span class="num">4</span>チャットで進める</h3>
+      <p>「やりたいこと」をふだんの言葉で書いて〔送信〕。AIが下書きや整理を返します。会話を続けて仕上げましょう。</p>
+      <ul>
+        <li>上の〔ChatGPTで開く〕等で、おすすめの別ツールも使えます。</li>
+        <li>マイク🎤で音声入力もできます。</li>
+        <li>終わったら〔✓ この作業を記録〕。稼働の記録が自動で残ります。</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ホーム画面に追加 -->
+  <div class="sec">
+    <h2><span class="dot"></span>アプリのように使う（ホーム画面に追加）</h2>
+    <div class="box">
+      <h4>iPhone（Safari）</h4>
+      <p>共有ボタン <b>􀈂</b> → 「ホーム画面に追加」 → 〔追加〕。アイコンから一発で開けます。</p>
+      <h4>Android（Chrome）</h4>
+      <p>右上のメニュー <b>⋮</b> → 「ホーム画面に追加」→ 〔追加〕。</p>
+    </div>
+  </div>
+
+  <!-- 注意 -->
+  <div class="sec">
+    <h2><span class="dot" style="background:var(--accent)"></span>だいじなお願い</h2>
+    <div class="note">
+      <b>● 個人情報は書かないでください。</b> 名前・住所・電話・病名などは入力しないでください（符号で扱います）。<br>
+      <b>● 体調を最優先に。</b> つらい日は休んでだいじょうぶ。休んでも仕事は止まりません。<br>
+      <b>● AIの答えは下書きです。</b> 送信・投稿・提出は、人が確認してから行います。<br>
+      <b>● これは体験版（デモ）です。</b> 入力内容は記録の練習用です。
+    </div>
+  </div>
+
+  <div class="cta">
+    <a class="btn primary" href="https://worker-app-sooty.vercel.app" target="_blank" rel="noopener">▶ アプリを開いて体験する</a>
+    <a class="btn sub" href="index.html">関係者限定ポータルへ戻る</a>
+  </div>
+
+  <div class="foot">
+    社外秘 / L2機密 ・ 2026 ／ i CanPass ・ ワーカー向けアプリ（v0デモ）<br>
+    ※ 体験用デモです。記録先は関係者限定のデータベースです。実名・原本は扱いません（符号運用）。
+  </div>
+</div>
+</body></html>
