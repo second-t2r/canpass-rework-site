@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="ja"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>CanPass ワーカーアプリ ・ しくみ仕様書（非エンジニア向け）</title>
+<style>
+:root{--brand:#1E5BC6;--accent:#D9744A;--ink:#1A2230;--gray:#71808F;--line:#E3E8EF;--bg:#F5F7FB;--card:#fff;--navy:#11243B;--green:#1AA06A;--canpassgreen:#2C5F2D;}
+*{margin:0;box-sizing:border-box;}
+html,body{background:var(--bg);color:var(--ink);font-family:-apple-system,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;-webkit-font-smoothing:antialiased;line-height:1.75;}
+.wrap{max-width:780px;margin:0 auto;padding:42px 20px 80px;}
+.head{display:flex;align-items:center;gap:16px;border-bottom:3px solid var(--brand);padding-bottom:18px;}
+.bn{font-size:34px;font-weight:900;letter-spacing:-.02em;}
+.bn .i{color:var(--brand);}
+.htext .t{font-size:15px;font-weight:800;color:var(--navy);}
+.htext .s{font-size:12.5px;color:var(--gray);margin-top:2px;}
+.back{display:inline-block;font-size:12.5px;color:var(--brand);text-decoration:none;margin-top:14px;font-weight:700;}
+.hero{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;margin:22px 0;box-shadow:0 2px 10px rgba(20,50,90,.05);}
+.hero .big{font-size:18px;font-weight:800;color:var(--navy);line-height:1.6;}
+.hero .big .hl{color:var(--canpassgreen);}
+.hero p{font-size:14px;color:#41505e;margin-top:10px;}
+.sec{margin-top:34px;}
+.sec h2{font-size:18px;color:var(--navy);display:flex;align-items:center;gap:10px;margin-bottom:6px;}
+.sec h2 .n{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;background:var(--brand);color:#fff;font-size:15px;font-weight:800;}
+.sec .sub{font-size:13px;color:var(--gray);margin:0 0 12px 38px;}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin:10px 0;box-shadow:0 1px 6px rgba(20,50,90,.04);}
+.diagram{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin:12px 0;text-align:center;}
+.diagram svg{max-width:100%;height:auto;}
+.parts{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.part{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--brand);border-radius:12px;padding:15px 17px;}
+.part .ic{font-size:24px;}
+.part .ti{font-size:15px;font-weight:800;color:var(--navy);margin-top:4px;}
+.part .ro{font-size:12px;color:var(--accent);font-weight:700;margin:2px 0 6px;}
+.part .de{font-size:13px;color:#41505e;}
+ol.flow{counter-reset:s;list-style:none;padding:0;margin:0;}
+ol.flow li{position:relative;padding:8px 0 8px 42px;font-size:14px;color:#33414f;border-bottom:1px dashed var(--line);}
+ol.flow li:last-child{border-bottom:none;}
+ol.flow li::before{counter-increment:s;content:counter(s);position:absolute;left:0;top:8px;width:28px;height:28px;border-radius:50%;background:var(--canpassgreen);color:#fff;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;}
+table{width:100%;border-collapse:collapse;font-size:13.3px;}
+th,td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top;}
+th{background:#F2F6FC;color:var(--navy);font-weight:700;}
+.tag{display:inline-block;font-size:11px;font-weight:700;border-radius:6px;padding:2px 8px;margin:2px 4px 2px 0;}
+.tg-ok{color:#176a48;background:#E5F4ED;}
+.tg-pay{color:#9c4a26;background:#FCEDE5;}
+.shield{background:#F4F8F4;border:1px solid #D6E6D6;border-radius:14px;padding:16px 20px;}
+.shield li{font-size:13.5px;color:#33473a;margin:5px 0;}
+.note{background:#FFF8EE;border:1px solid #F3E2C2;border-radius:14px;padding:16px 20px;font-size:13.5px;color:#6b5526;}
+.road{display:flex;gap:0;flex-wrap:wrap;}
+.road .ph{flex:1;min-width:150px;border-top:4px solid var(--brand);padding:12px 10px 0;}
+.road .ph .l{font-size:12px;font-weight:800;color:var(--brand);}
+.road .ph .d{font-size:12.5px;color:#41505e;margin-top:4px;}
+.foot{margin-top:42px;padding-top:16px;border-top:1px solid var(--line);font-size:11.5px;color:var(--gray);line-height:1.7;}
+@media(max-width:560px){.parts{grid-template-columns:1fr;}.bn{font-size:28px;}}
+</style></head><body>
+<div class="wrap">
+
+  <div class="head">
+    <div class="bn"><span class="i">i</span> CanPass</div>
+    <div class="htext">
+      <div class="t">ワーカーアプリ ・ しくみ仕様書（非エンジニア向け）</div>
+      <div class="s">「人 × AI のワークスペース」の中身をやさしく解説 ・ 社外秘（L2機密）</div>
+    </div>
+  </div>
+  <a class="back" href="index.html">← 関係者限定ポータルへ戻る</a>
+
+  <div class="hero">
+    <div class="big">ひとことで言うと——<br><span class="hl">ワーカーさんが主役</span>。AIは「いつでも手伝ってくれる助手」。</div>
+    <p>ワーカーがブラウザで「やりたいこと」を書くと、裏でAIが下書きや整理を手伝い、その働きが自動で“業務日誌”に記録されます。AIが人の代わりに働くのではなく、<b>人がAIを道具として使って働く</b>——これがCanPassの「AIワークスペース」の考え方です。</p>
+  </div>
+
+  <!-- 1. 全体の絵 -->
+  <div class="sec">
+    <h2><span class="n">1</span>全体の絵</h2>
+    <div class="sub">スマホ → CanPassのサーバー → AI と 記録ノート。ワーカーのスマホには何も入れません。</div>
+    <div class="diagram">
+      <svg viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="全体構成図">
+        <defs>
+          <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+            <path d="M0,0 L8,4 L0,8 z" fill="#1E5BC6"/>
+          </marker>
+        </defs>
+        <!-- スマホ -->
+        <rect x="20" y="95" width="120" height="110" rx="14" fill="#fff" stroke="#1b2230" stroke-width="2.5"/>
+        <rect x="34" y="112" width="92" height="62" rx="6" fill="#EAF2EA"/>
+        <text x="80" y="148" font-size="13" text-anchor="middle" fill="#2C5F2D" font-weight="bold">チャット</text>
+        <text x="80" y="226" font-size="12.5" text-anchor="middle" fill="#1A2230" font-weight="bold">ワーカーのスマホ</text>
+        <text x="80" y="244" font-size="10.5" text-anchor="middle" fill="#71808F">ブラウザだけ</text>
+        <!-- サーバー -->
+        <rect x="270" y="95" width="160" height="110" rx="14" fill="#11243B"/>
+        <text x="350" y="140" font-size="14" text-anchor="middle" fill="#fff" font-weight="bold">CanPass</text>
+        <text x="350" y="160" font-size="14" text-anchor="middle" fill="#fff" font-weight="bold">サーバー</text>
+        <text x="350" y="226" font-size="11" text-anchor="middle" fill="#71808F">取次ぎ役・鍵を守る</text>
+        <!-- AI -->
+        <rect x="560" y="40" width="140" height="80" rx="14" fill="#fff" stroke="#1E5BC6" stroke-width="2.5"/>
+        <text x="630" y="76" font-size="14" text-anchor="middle" fill="#1E5BC6" font-weight="bold">AI（Claude）</text>
+        <text x="630" y="96" font-size="10.5" text-anchor="middle" fill="#71808F">下書き・整理</text>
+        <!-- Notion -->
+        <rect x="560" y="180" width="140" height="80" rx="14" fill="#fff" stroke="#1AA06A" stroke-width="2.5"/>
+        <text x="630" y="216" font-size="14" text-anchor="middle" fill="#1AA06A" font-weight="bold">記録ノート</text>
+        <text x="630" y="236" font-size="10.5" text-anchor="middle" fill="#71808F">稼働・体調の記録</text>
+        <!-- arrows -->
+        <line x1="142" y1="150" x2="266" y2="150" stroke="#1E5BC6" stroke-width="2.5" marker-end="url(#ar)"/>
+        <line x1="266" y1="135" x2="146" y2="135" stroke="#9fb6d8" stroke-width="2" marker-end="url(#ar)"/>
+        <line x1="432" y1="130" x2="556" y2="90" stroke="#1E5BC6" stroke-width="2.5" marker-end="url(#ar)"/>
+        <line x1="432" y1="170" x2="556" y2="210" stroke="#1AA06A" stroke-width="2.5" marker-end="url(#ar)"/>
+        <text x="204" y="128" font-size="10.5" text-anchor="middle" fill="#71808F">送信</text>
+        <text x="204" y="172" font-size="10.5" text-anchor="middle" fill="#71808F">返事</text>
+      </svg>
+    </div>
+    <div class="card" style="font-size:13.5px;color:#41505e;">
+      ポイントは <b>AIの呼び出しはサーバーが代行する</b>こと。だからワーカーのスマホにClaudeやChatGPTを入れる必要はなく、ブラウザを開くだけで使えます。
+    </div>
+  </div>
+
+  <!-- 2. 4つの部品 -->
+  <div class="sec">
+    <h2><span class="n">2</span>4つの部品</h2>
+    <div class="sub">むずかしく見えますが、役割で見るとシンプルです。</div>
+    <div class="parts">
+      <div class="part"><div class="ic">📱</div><div class="ti">スマホ（ブラウザ）</div><div class="ro">＝受付の窓口</div><div class="de">ワーカーが見て・書く画面。アプリのインストール不要。「ホーム画面に追加」でアプリ風にも。</div></div>
+      <div class="part" style="border-left-color:#11243B"><div class="ic">🗄️</div><div class="ti">CanPassサーバー</div><div class="ro">＝取次ぎの司令塔</div><div class="de">スマホからの依頼を受け、AIや記録ノートへ取り次ぐ。AIの鍵（パスワード）はここだけが持ち、外に出さない。</div></div>
+      <div class="part" style="border-left-color:#1E5BC6"><div class="ic">🤖</div><div class="ti">AI（Claude）</div><div class="ro">＝働き者の助手</div><div class="de">下書き・要約・翻訳などを担当。作業の種類ごとに「CanPass流のやり方メモ（手順書）」を渡してから答えさせる。</div></div>
+      <div class="part" style="border-left-color:#1AA06A"><div class="ic">📒</div><div class="ti">記録ノート（Notion）</div><div class="ro">＝自動でつく業務日誌</div><div class="de">ログイン・体調・作業を自動で記録。すでにCanPassで使っているデータベースをそのまま活用。</div></div>
+    </div>
+  </div>
+
+  <!-- 3. 1回の流れ -->
+  <div class="sec">
+    <h2><span class="n">3</span>1回の作業の流れ</h2>
+    <div class="sub">ログインから記録まで、裏で起きていること。</div>
+    <div class="card">
+      <ol class="flow">
+        <li>ワーカーがブラウザでアプリを開き、符号とパスコードで<b>ログイン</b>。</li>
+        <li><b>体調をチェックイン</b>（1〜5）。→ 記録ノートの「ヘルスログ」へ自動記録。</li>
+        <li>割り当てられた<b>作業の種類を選ぶ</b>（6種から）。</li>
+        <li>「やりたいこと」を書いて送信。サーバーが<b>CanPass流の手順書を添えてAIに渡す</b>。</li>
+        <li>AIの返事（下書き）が画面に表示。会話を続けて仕上げる。</li>
+        <li>「✓ この作業を記録」で、<b>稼働ログ</b>に自動記録（種類・所要時間など）。</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- 4. 記録されること -->
+  <div class="sec">
+    <h2><span class="n">4</span>自動で記録されること と、その意味</h2>
+    <div class="sub">記録は“監視”ではなく、無理なく続けて働くための土台です。</div>
+    <div class="card">
+      <table>
+        <tr><th>記録</th><th>中身</th><th>何の役に立つか</th></tr>
+        <tr><td>ログイン/ログアウト</td><td>日時・符号・稼働時間</td><td>稼働の見える化</td></tr>
+        <tr><td>ヘルスログ</td><td>体調・気分・痛み・疲労（各1〜5）</td><td>体調に合わせた仕事の割り振り</td></tr>
+        <tr><td>作業記録</td><td>作業の種類・所要時間・状態の要約</td><td>引き継ぎ（1業務=1.5人）／実績</td></tr>
+      </table>
+      <p style="font-size:13px;color:#41505e;margin-top:12px;">これらが貯まると、<b>誰でも続きを引き継げる・体調が悪い日は別の人に回せる・稼働や品質を改善できる</b>ようになります。将来は（本人の同意のうえ匿名化して）研究データとしても活かせます。</p>
+    </div>
+  </div>
+
+  <!-- 5. プライバシー -->
+  <div class="sec">
+    <h2><span class="n">5</span>プライバシーの守り方</h2>
+    <div class="sub">医療に隣接する事業だからこそ、いちばん大事にしています。</div>
+    <div class="shield">
+      <ul>
+        <li><b>符号で管理：</b>記録は「worker-◯」の符号だけ。実名と符号の対応表はアプリの外で人が保管します。</li>
+        <li><b>自動の伏字：</b>記録するとき、メール・電話番号・長い数字などは自動で伏字（マスク）にします。</li>
+        <li><b>鍵はサーバーの中だけ：</b>AIやデータベースのパスワードはサーバー内のみ。画面やスマホには出ません。</li>
+        <li><b>AIに学習されない：</b>API経由のため、入力内容がAIの学習に使われることはありません。</li>
+        <li><b>外には出さない：</b>送信・投稿・提出はAIがしません。人が確認してから行います。</li>
+      </ul>
+    </div>
+    <div class="note" style="margin-top:10px;"><b>お願い：</b>それでも、名前・住所・病名などの個人情報は最初から入力しないでください（符号運用が基本です）。</div>
+  </div>
+
+  <!-- 6. お金 -->
+  <div class="sec">
+    <h2><span class="n">6</span>お金の仕組み（ローコスト設計）</h2>
+    <div class="card">
+      <p style="font-size:13.8px;color:#41505e;">置き場所（ホスティング）・記録ノート・ログインの仕組みは<span class="tag tg-ok">無料の範囲</span>でまかなえます。費用がかかるのは<span class="tag tg-pay">AIの返事を作る部分だけ</span>（使った分だけの従量制）。</p>
+      <ul style="font-size:13.5px;color:#41505e;margin:6px 0 0 18px;">
+        <li>ふだんは費用の安いAIモデルを使用。1回の作業でおよそ数円〜程度。</li>
+        <li><b>使いすぎ防止の“止める仕掛け”</b>を内蔵（月の上限／期限を超えたら自動で停止）。</li>
+        <li>ワーカーの費用負担はありません。</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 7. ロードマップ -->
+  <div class="sec">
+    <h2><span class="n">7</span>いまは“v0”、これから本格システムへ</h2>
+    <div class="sub">まず小さく動かして検証 → 手応えを見て本格開発。</div>
+    <div class="card">
+      <div class="road">
+        <div class="ph"><div class="l">v0（いま）</div><div class="d">既存の道具（AI＋記録ノート）を組み合わせた軽量版。すぐ試せて低コスト。</div></div>
+        <div class="ph" style="border-top-color:#D9744A"><div class="l">Phase1</div><div class="d">専用システム化（担当：渡邊）。記録をそのまま引き継ぎ、使い勝手・上限管理を強化。</div></div>
+        <div class="ph" style="border-top-color:#1AA06A"><div class="l">その先</div><div class="d">貯まったデータを（同意のうえ匿名化して）事業の資産・研究へ。</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. なぜこの作り -->
+  <div class="sec">
+    <h2><span class="n">8</span>なぜ「ブラウザだけ」にしたのか</h2>
+    <div class="card" style="font-size:14px;color:#33414f;">
+      入院・通院中でスマホしか触れない方、PCやアプリの設定が苦手な方を<b>誰も取り残さない</b>ため。難しいインストールや設定をなくし、「URLを開くだけ」にしました。これはCanPassの“供給ではなく支援”という考え方そのものです。
+    </div>
+  </div>
+
+  <div class="foot">
+    社外秘 / L2機密 ・ 2026 ／ i CanPass ・ ワーカー向けアプリ（v0デモ）<br>
+    ※ 関連：<a href="worker-app-guide.html">体験ガイド</a> ／ <a href="worker-app-faq.html">よくある質問（FAQ）</a>。実名・原本は扱いません（符号運用）。
+  </div>
+</div>
+</body></html>
