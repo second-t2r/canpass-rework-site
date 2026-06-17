@@ -64,7 +64,7 @@ th{background:#F2F6FC;color:var(--navy);font-weight:700;}
 
   <div class="hero">
     <div class="big">ひとことで言うと——<br><span class="hl">ワーカーさんが主役</span>。AIは「いつでも手伝ってくれる助手」。</div>
-    <p>ワーカーがブラウザで「やりたいこと」を書くと、裏でAIが下書きや整理を手伝い、その働きが自動で“業務日誌”に記録されます。AIが人の代わりに働くのではなく、<b>人がAIを道具として使って働く</b>——これがCanPassの「AIワークスペース」の考え方です。</p>
+    <p>ワーカーがブラウザで「やりたいこと」を書くと、裏でAIが下書きや整理を手伝い、その働きが自動で“業務日誌”に記録されます。AIが人の代わりに働くのではなく、<b>人がAIを道具として使って働く</b>——これがCanPassの「AIワークスペース」の考え方です。<br><span style="color:var(--canpassgreen);font-weight:700;">例：会議の音声や動画をアップすると、議事録が自動で完成します。</span></p>
   </div>
 
   <!-- 1. 全体の絵 -->
@@ -118,7 +118,7 @@ th{background:#F2F6FC;color:var(--navy);font-weight:700;}
     <div class="parts">
       <div class="part"><div class="ic">📱</div><div class="ti">スマホ（ブラウザ）</div><div class="ro">＝受付の窓口</div><div class="de">ワーカーが見て・書く画面。アプリのインストール不要。「ホーム画面に追加」でアプリ風にも。</div></div>
       <div class="part" style="border-left-color:#11243B"><div class="ic">🗄️</div><div class="ti">CanPassサーバー</div><div class="ro">＝取次ぎの司令塔</div><div class="de">スマホからの依頼を受け、AIや記録ノートへ取り次ぐ。AIの鍵（パスワード）はここだけが持ち、外に出さない。</div></div>
-      <div class="part" style="border-left-color:#1E5BC6"><div class="ic">🤖</div><div class="ti">AI（Claude）</div><div class="ro">＝働き者の助手</div><div class="de">下書き・要約・翻訳などを担当。作業の種類ごとに「CanPass流のやり方メモ（手順書）」を渡してから答えさせる。</div></div>
+      <div class="part" style="border-left-color:#1E5BC6"><div class="ic">🤖</div><div class="ti">AI（Claude / Gemini）</div><div class="ro">＝働き者の助手</div><div class="de">文章・要約・翻訳などはClaude、<b>会議の音声/動画→議事録はGemini</b>が担当。作業の種類ごとに「CanPass流のやり方メモ（手順書）」を渡してから答えさせる。</div></div>
       <div class="part" style="border-left-color:#1AA06A"><div class="ic">📒</div><div class="ti">記録ノート（Notion）</div><div class="ro">＝自動でつく業務日誌</div><div class="de">ログイン・体調・作業を自動で記録。すでにCanPassで使っているデータベースをそのまま活用。</div></div>
     </div>
   </div>
@@ -131,7 +131,7 @@ th{background:#F2F6FC;color:var(--navy);font-weight:700;}
       <ol class="flow">
         <li>ワーカーがブラウザでアプリを開き、符号とパスコードで<b>ログイン</b>。</li>
         <li><b>体調をチェックイン</b>（1〜5）。→ 記録ノートの「ヘルスログ」へ自動記録。</li>
-        <li>割り当てられた<b>作業の種類を選ぶ</b>（6種から）。</li>
+        <li>割り当てられた<b>作業の種類を選ぶ</b>（7種から）。</li>
         <li>「やりたいこと」を書いて送信。サーバーが<b>CanPass流の手順書を添えてAIに渡す</b>。</li>
         <li>AIの返事（下書き）が画面に表示。会話を続けて仕上げる。</li>
         <li>「✓ この作業を記録」で、<b>稼働ログ</b>に自動記録（種類・所要時間など）。</li>
