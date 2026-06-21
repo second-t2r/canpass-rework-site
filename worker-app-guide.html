@@ -117,16 +117,36 @@ html,body{background:var(--bg);color:var(--ink);font-family:-apple-system,"Hirag
   </div>
 
   <div class="step">
-    <div class="ph"><img src="assets/worker-app/03-work.png" alt="作業の種類を選ぶ画面"></div>
+    <div class="ph"><img src="assets/worker-app/03-work.png" alt="作業の種類を選ぶ画面（体調おすすめ＋グループ表示）"></div>
     <div class="bd">
       <h3><span class="num">3</span>やることを選ぶ</h3>
-      <p>割り当てられた作業の種類をタップします。デモでは7種類から選べます。</p>
+      <p>画面の上に、<b>今日の体調に合わせたおすすめ</b>（「今日は軽めがおすすめ」など）が出ます。数字のノルマは出さず、選ぶのはあなたです。</p>
+      <p>作業の種類は <b>2つのまとまり</b>に分かれています。やりたいものをタップしてください（全10種）。</p>
+      <div style="margin:4px 0 6px;font-size:12px;color:var(--canpassgreen);font-weight:800;">💻 デスクワーク系</div>
       <div>
         <span class="tag">✍️ 文章・SNS下書き</span><span class="tag">🔎 リサーチ・整理</span>
         <span class="tag">📊 データ入力・表整理</span><span class="tag">📝 文字起こしの整え</span>
         <span class="tag">✉️ 返信の下書き</span><span class="tag">🌐 やさしい日本語・翻訳</span>
         <span class="tag">🎤 音声・動画→議事録</span>
       </div>
+      <div style="margin:10px 0 6px;font-size:12px;color:var(--canpassgreen);font-weight:800;">🤝 リアル作業系</div>
+      <div>
+        <span class="tag">📮 発送・封入代行</span><span class="tag">✒️ 宛名書き・代書</span>
+        <span class="tag">🎪 リアルイベント運営</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="ph"><img src="assets/worker-app/03b-work-assigned.png" alt="アサインされた業務の表示"></div>
+    <div class="bd">
+      <h3><span class="num">＋</span>「あなたにアサインされた業務」</h3>
+      <p>担当の仕事が割り当てられている日は、画面の上に<b>あなたの業務</b>が出ます。やるものを選んでから進められます。</p>
+      <ul>
+        <li>表示されるのは <b>PM（運用担当）が割り当てた仕事だけ</b>です。</li>
+        <li>選ぶのは「今日やる」という<b>希望</b>。やる・やらないは相談してOKです。</li>
+        <li>クライアント名などは符号で表示され、こなすべき件数（ノルマ）は出しません。</li>
+      </ul>
     </div>
   </div>
 

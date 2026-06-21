@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="ja"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>CanPass 管理画面 ・ 運用ガイド</title>
+<style>
+:root{--brand:#1E5BC6;--accent:#D9744A;--ink:#1A2230;--gray:#71808F;--line:#E3E8EF;--bg:#F5F7FB;--card:#fff;--navy:#11243B;--green:#1AA06A;--canpassgreen:#0f9d6e;}
+*{margin:0;box-sizing:border-box;}
+html,body{background:var(--bg);color:var(--ink);font-family:-apple-system,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;-webkit-font-smoothing:antialiased;line-height:1.7;}
+.wrap{max-width:880px;margin:0 auto;padding:42px 20px 80px;}
+.head{display:flex;align-items:center;gap:16px;border-bottom:3px solid var(--brand);padding-bottom:18px;}
+.bn{font-size:34px;font-weight:900;letter-spacing:-.02em;}
+.bn .i{color:var(--brand);}
+.htext .t{font-size:15px;font-weight:800;color:var(--navy);}
+.htext .s{font-size:12.5px;color:var(--gray);margin-top:2px;}
+.lead{font-size:14px;color:var(--gray);margin:18px 0 8px;}
+.back{display:inline-block;font-size:12.5px;color:var(--brand);text-decoration:none;margin-top:10px;font-weight:700;}
+
+.start{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;margin:24px 0;box-shadow:0 2px 10px rgba(20,50,90,.05);}
+.start h2{font-size:17px;color:var(--navy);margin-bottom:12px;display:flex;align-items:center;gap:9px;}
+.start h2 .dot{width:11px;height:11px;border-radius:3px;background:var(--brand);}
+.url{display:inline-block;font-size:14px;font-weight:700;color:var(--brand);word-break:break-all;text-decoration:none;background:#EEF3FC;border-radius:8px;padding:7px 11px;}
+.cred{margin-top:12px;font-size:13.5px;}
+.cred b{display:inline-block;min-width:120px;color:var(--gray);font-weight:600;}
+.cred code{background:#F0F2F6;border-radius:6px;padding:2px 8px;font-size:13.5px;font-weight:700;color:var(--ink);}
+.pw{display:inline-block;font-size:11px;font-weight:800;color:#9c4a26;background:#FCEDE5;border-radius:999px;padding:3px 10px;margin-left:6px;vertical-align:middle;}
+
+.feat{display:flex;gap:18px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin:18px 0;box-shadow:0 2px 8px rgba(20,50,90,.04);}
+.feat .bd{flex:1;min-width:0;}
+.tabname{display:inline-block;font-size:11.5px;font-weight:800;color:#fff;background:var(--canpassgreen);border-radius:7px;padding:3px 10px;margin-bottom:8px;}
+.feat h3{font-size:17px;color:var(--navy);margin:2px 0 8px;}
+.feat p{font-size:13.8px;color:#41505e;margin:6px 0;}
+.feat ul{margin:6px 0 0;padding-left:20px;}
+.feat li{font-size:13.5px;color:#41505e;margin:4px 0;}
+.shot{width:100%;border-radius:12px;border:1px solid #d8deea;box-shadow:0 6px 18px rgba(20,50,90,.10);display:block;margin:6px 0 2px;}
+.cap{font-size:11.5px;color:var(--gray);margin-top:4px;}
+
+.sec{margin-top:30px;}
+.sec h2{font-size:16px;color:var(--navy);display:flex;align-items:center;gap:9px;margin-bottom:12px;}
+.sec h2 .dot{width:10px;height:10px;border-radius:3px;background:var(--brand);}
+.note{background:#FFF8EE;border:1px solid #F3E2C2;border-radius:14px;padding:16px 20px;font-size:13.5px;color:#6b5526;}
+.note b{color:#8a6d00;}
+.gov{background:#EAF4FF;border:1px solid #CFE2F7;border-radius:14px;padding:16px 20px;font-size:13.5px;color:#1c4a7a;}
+.gov b{color:#0d3a66;}
+
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px;}
+.btn{flex:1;min-width:200px;text-align:center;text-decoration:none;border-radius:14px;padding:16px;font-size:15px;font-weight:800;}
+.btn.primary{background:var(--canpassgreen);color:#fff;}
+.btn.sub{background:#fff;color:var(--brand);border:2px solid var(--brand);}
+
+.foot{margin-top:42px;padding-top:16px;border-top:1px solid var(--line);font-size:11.5px;color:var(--gray);line-height:1.7;}
+@media(max-width:560px){.bn{font-size:28px;}.cred b{min-width:0;display:block;margin-bottom:2px;}}
+</style></head><body>
+<div class="wrap">
+
+  <div class="head">
+    <div class="bn"><span class="i">i</span> CanPass</div>
+    <div class="htext">
+      <div class="t">管理画面 ・ 運用ガイド</div>
+      <div class="s">経営者・PM向け ・ ワーカーの稼働／体調／タスクを一目で ・ 社外秘（L2機密）</div>
+    </div>
+  </div>
+
+  <div class="lead">
+    CanPass の<b>管理画面</b>（経営者・PM向け）の使い方ガイドです。<br>
+    符号で働くワーカーの「今日の稼働・体調・タスクの状況」を1画面で把握し、無理のないアサインを判断できます。
+    操作は<b>提案・閲覧が中心</b>で、最終的な確定は人が行います。
+  </div>
+  <a class="back" href="index.html">← 関係者限定ポータルへ戻る</a>
+
+  <!-- アクセス -->
+  <div class="start">
+    <h2><span class="dot"></span>入り方</h2>
+    <a class="url" href="https://worker-app-sooty.vercel.app/admin" target="_blank" rel="noopener">worker-app-sooty.vercel.app/admin</a>
+    <div class="cred">
+      <div style="margin-top:8px;"><b>管理者パスコード</b> <code>（別途共有）</code> <span class="pw">PW・管理者限定</span></div>
+    </div>
+    <p style="font-size:12px;color:var(--gray);margin-top:12px;">※ ワーカー用ログインとは別系統です。パスコードは経営者・PMにのみ共有します。PCでの利用を想定（スマホでも閲覧可）。</p>
+  </div>
+
+  <!-- 概要 -->
+  <div class="feat">
+    <div class="bd">
+      <span class="tabname">概要</span>
+      <h3>今日の状況をひと目で</h3>
+      <p>本日の稼働ワーカー数・作業完了・進行中タスク・<b>見守り対象</b>の人数をカードで表示。締切超過や未割当などの<b>アラート</b>、体調が低い人の<b>見守りリスト</b>もここに出ます。</p>
+      <img class="shot" src="assets/admin/admin-01-overview.png" alt="概要タブ">
+      <div class="cap">概要：KPIカード＋アラート＋本日の見守り対象</div>
+    </div>
+  </div>
+
+  <!-- ワーカー稼働 -->
+  <div class="feat">
+    <div class="bd">
+      <span class="tabname">ワーカー稼働</span>
+      <h3>誰がどれくらい働いたか（期間別）</h3>
+      <p>7／14／30日の期間で、ワーカー別の稼働日・ログイン・完了数・稼働時間・最新の体調/疲労をまとめます。符号の横に氏名（管理者のみ）も表示。</p>
+      <img class="shot" src="assets/admin/admin-02-workers.png" alt="ワーカー稼働タブ">
+      <div class="cap">ワーカー稼働：期間別サマリ（要配慮の人は色付き）</div>
+    </div>
+  </div>
+
+  <!-- ヘルス見守り -->
+  <div class="feat">
+    <div class="bd">
+      <span class="tabname">ヘルス見守り</span>
+      <h3>体調の傾向を見て、無理をさせない</h3>
+      <p>体調（高いほど良い）・疲労／痛み（高いほど注意）の最新値と平均、見守り日数を表示。<b>軽作業や休息の声かけ</b>のための材料で、詮索のためのものではありません。</p>
+      <img class="shot" src="assets/admin/admin-03-health.png" alt="ヘルス見守りタブ">
+      <div class="cap">ヘルス見守り：要配慮の人を上に。判断材料として最小限に使う</div>
+    </div>
+  </div>
+
+  <!-- タスク -->
+  <div class="feat">
+    <div class="bd">
+      <span class="tabname">タスク</span>
+      <h3>受託タスクの状態・担当をその場で更新</h3>
+      <p>受託タスクの一覧。状態（未着手〜完了）・主担当／副担当をその場で変更でき、締切超過は赤で警告。新規タスクの起票もできます。<b>1業務＝主＋副の冗長</b>を保つ運用です。</p>
+      <img class="shot" src="assets/admin/admin-04-tasks.png" alt="タスクタブ">
+      <div class="cap">タスク：インライン編集（状態・担当）＋新規起票</div>
+    </div>
+  </div>
+
+  <!-- アサイン提案 -->
+  <div class="feat">
+    <div class="bd">
+      <span class="tabname">アサイン提案</span>
+      <h3>「誰が何を」をAIが提案（確定は人）</h3>
+      <p>受託タスク × 当日の稼働 × 体調 を掛け合わせ、当日の担当案を提示します。体調が低い人には軽め、余力のある人へ移管、副担当の欠けも検知。<b>これは提案で、確定は人が判断</b>します。</p>
+      <img class="shot" src="assets/admin/admin-05-assign.png" alt="アサイン提案タブ">
+      <div class="cap">アサイン提案：提案・余力の可視化（反映ボタンで担当に設定）</div>
+    </div>
+  </div>
+
+  <!-- 名簿 -->
+  <div class="feat">
+    <div class="bd">
+      <span class="tabname">名簿</span>
+      <h3>符号↔実名（管理者だけが見られる）</h3>
+      <p>符号と実名の対応表。<b>管理者だけ</b>がこの画面で参照できます。ワーカー側アプリ・各種ログ・公開物には実名は一切出ません（符号で運用）。下の画像はサンプル（氏名はダミー）です。</p>
+      <img class="shot" src="assets/admin/admin-06-roster.png" alt="名簿タブ">
+      <div class="cap">名簿：符号↔実名（L3・管理者限定。実運用では実名を安全な別管理に）</div>
+    </div>
+  </div>
+
+  <!-- ガバナンス -->
+  <div class="sec">
+    <h2><span class="dot"></span>運用の原則</h2>
+    <div class="gov">
+      <b>● 提案のみ・確定は人。</b> 画面の提案（アサイン等）は判断材料です。担当の確定は人が行います。<br>
+      <b>● 符号運用（L3）。</b> 稼働・体調・タスクは符号で扱い、実名は管理者の「名簿」だけに留めます。<br>
+      <b>● 体調を最優先に。</b> 見守りは「軽作業・休息」のため。体調を理由に量のノルマを課しません。<br>
+      <b>● 管理者限定。</b> この画面は管理者パスコードの内側のみ。閲覧できる人を最小限にしてください。
+    </div>
+  </div>
+
+  <div class="cta">
+    <a class="btn primary" href="https://worker-app-sooty.vercel.app/admin" target="_blank" rel="noopener">▶ 管理画面を開く</a>
+    <a class="btn sub" href="index.html">関係者限定ポータルへ戻る</a>
+  </div>
+
+  <div class="foot">
+    社外秘 / L2機密 ・ 2026 ／ i CanPass ・ 管理画面（経営者・PM向け）<br>
+    ※ 画面のデータはサンプルです。実名・原本は扱いません（符号運用）。実名対応は管理者のみ・別管理。
+  </div>
+</div>
+</body></html>
