@@ -106,17 +106,19 @@ th{background:#F2F6FC;color:var(--navy);font-weight:700;}
     </div>
   </div>
 
-  <!-- 2. 6つの画面 -->
+  <!-- 2. 8つの画面 -->
   <div class="sec">
-    <h2><span class="n">2</span>6つの画面（タブ）</h2>
+    <h2><span class="n">2</span>8つの画面（タブ）</h2>
     <div class="sub">上のタブを切り替えるだけ。目的ごとに分かれています。</div>
     <div class="parts">
       <div class="part"><span class="tn">概要</span><div class="ti">今日をひと目で</div><div class="de">本日の稼働人数・作業完了・進行中タスク・見守り対象。締切超過などのアラートも。</div></div>
-      <div class="part"><span class="tn">ワーカー稼働</span><div class="ti">誰がどれだけ働いたか</div><div class="de">7／14／30日で、ワーカー別の稼働日・回数・時間・最新の体調をまとめて表示。</div></div>
+      <div class="part"><span class="tn">ワーカー稼働</span><div class="ti">誰がどれだけ働いたか</div><div class="de">7／14／30日で、ワーカー別の稼働日・回数・<b>作業時間／セッション時間</b>・1日平均・最新の体調。<b>日次の勤怠表</b>とCSV出力も。<b>働き過ぎ</b>はバッジで警告。</div></div>
+      <div class="part"><span class="tn">月次・請求</span><div class="ti">月ごとの稼働と概算請求</div><div class="de">月を選んで、ワーカー別の稼働時間・1日平均・最大単日。契約（単価）から<b>概算請求額</b>を試算しCSV出力。</div></div>
+      <div class="part" style="border-left-color:#D9744A"><span class="tn" style="background:#D9744A">請求・支払</span><div class="ti">請求書の集計と支払</div><div class="de">ワーカーから提出された請求書を<b>ワーカー別／案件別</b>に集計。承認→支払で<b>支払明細を自動発行</b>。源泉徴収・インボイス対応。</div></div>
       <div class="part"><span class="tn">ヘルス見守り</span><div class="ti">体調の傾向</div><div class="de">体調・疲労・痛みの最新と平均、見守り日数。軽作業・休息の声かけのための材料。</div></div>
       <div class="part"><span class="tn">タスク</span><div class="ti">受託タスクの管理</div><div class="de">状態・担当をその場で変更、締切超過は赤。新規タスクの起票も。</div></div>
       <div class="part"><span class="tn">アサイン提案</span><div class="ti">「誰が何を」の下案</div><div class="de">受託×稼働×体調から当日の担当案。体調が低い人は軽め・余力ある人へ。<b>確定は人</b>。</div></div>
-      <div class="part"><span class="tn">名簿・契約</span><div class="ti">符号↔実名＋契約</div><div class="de">業務委託の標準稼働・未達/超過単価。<b>管理者だけ</b>が見られる。</div></div>
+      <div class="part"><span class="tn">名簿・契約</span><div class="ti">符号↔実名＋契約</div><div class="de">業務委託の標準稼働・未達/超過単価＋<b>源泉徴収・インボイス区分</b>。<b>管理者だけ</b>が見られる。</div></div>
     </div>
     <img class="shot" src="assets/admin/admin-01-overview.png" alt="管理画面 概要">
     <div class="cap">「概要」タブの例（数値はサンプル）。</div>
@@ -135,6 +137,24 @@ th{background:#F2F6FC;color:var(--navy);font-weight:700;}
         <li>未割当・締切超過・副担当なしを<b>アラート</b>で表示。</li>
         <li>提案はあくまで下案。<b>「反映」を押すかどうかは人が判断</b>します。</li>
       </ol>
+    </div>
+  </div>
+
+  <!-- ＋ 勤怠から請求・支払まで -->
+  <div class="sec">
+    <h2><span class="n">＋</span>勤怠から請求・支払まで（業務委託の実務）</h2>
+    <div class="sub">「実際に手を動かした時間（能動稼働）」を土台に、勤怠 → 請求 → 支払を一気通貫で。</div>
+    <div class="card">
+      <ol class="flow">
+        <li>ワーカーアプリで<b>能動稼働時間</b>（離席・待ち時間を除いた実作業時間）が自動で貯まる。</li>
+        <li>「ワーカー稼働／月次・請求」で、<b>日次の勤務時間・1日平均・最大単日</b>を確認。<b>働き過ぎ</b>は自動でバッジ表示。</li>
+        <li>ワーカーが自分の画面（/billing）から、当月の<b>納品書・請求書を作成して提出</b>。</li>
+        <li>管理画面「請求・支払」に届く。<b>ワーカー別／案件別</b>に集計（小計・消費税・源泉徴収・請求合計・未払）。</li>
+        <li><b>承認</b>し、振込後に<b>支払</b>を押すと、<b>支払明細（CanPass→ワーカー）が自動発行</b>。請求書は支払済に。</li>
+        <li>各書類は<b>印刷ボタンでPDF保存</b>。源泉徴収（10.21%）・<b>インボイス（適格／免税）</b>に対応。報酬は<b>時間／出来高（成果物の件数×単価）／併用</b>に対応。</li>
+      </ol>
+      <div class="note" style="margin-top:12px;"><b>働き過ぎ見守り：</b>1日の能動稼働が一定（8時間）を超えた日は「働き過ぎ」として見守りに連動。体調ログと合わせて、無理の早期発見に使います（量のノルマは課しません）。</div>
+      <div class="note" style="margin-top:10px;background:#FFF8EE;"><b>金額はあくまで自動計算の概算です。</b>確定の請求・支払は税務・経理の確認のうえ実施してください。源泉徴収税額は支払者（CanPass）が控除・納付します。</div>
     </div>
   </div>
 

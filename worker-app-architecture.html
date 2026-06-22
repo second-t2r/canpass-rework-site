@@ -148,9 +148,10 @@ th{background:#F2F6FC;color:var(--navy);font-weight:700;}
         <tr><th>記録</th><th>中身</th><th>何の役に立つか</th></tr>
         <tr><td>ログイン/ログアウト</td><td>日時・符号・稼働時間</td><td>稼働の見える化</td></tr>
         <tr><td>ヘルスログ</td><td>体調・気分・痛み・疲労（各1〜5）</td><td>体調に合わせた仕事の割り振り</td></tr>
-        <tr><td>作業記録</td><td>作業の種類・所要時間・状態の要約</td><td>引き継ぎ（1業務=1.5人）／実績</td></tr>
+        <tr><td>作業記録</td><td>作業の種類・所要時間・状態の要約</td><td>引き継ぎ（1業務=1.5人）／実績・勤怠</td></tr>
       </table>
       <p style="font-size:13px;color:#41505e;margin-top:12px;">これらが貯まると、<b>誰でも続きを引き継げる・体調が悪い日は別の人に回せる・稼働や品質を改善できる</b>ようになります。将来は（本人の同意のうえ匿名化して）研究データとしても活かせます。</p>
+      <div class="note" style="margin-top:12px;"><b>「稼働時間」は“実際に手を動かしていた時間”です。</b>画面を開きっぱなしにした待ち時間・離席・休憩は含めません（一定時間操作がないと自動で除外）。だから<b>休んでもマイナスにならない</b>——無理なく続けるための数え方です。これが「その日の勤務時間」となり、勤怠・請求の土台になります。</div>
     </div>
   </div>
 
@@ -161,6 +162,19 @@ th{background:#F2F6FC;color:var(--navy);font-weight:700;}
     <div class="card">
       <p style="font-size:13.5px;color:#41505e;">上の記録（稼働・体調・タスク）は、<b>管理画面（/admin ・ 管理者パスコードの内側）</b>に集まります。本日の稼働・見守り対象・タスク状況を1画面で把握でき、<b>受託タスク × 稼働 × 体調</b>から「誰が何を」のアサイン案も出ます（確定は人）。実名は管理者だけが見られる「名簿」に限定し、ワーカー側アプリや各ログには出しません（符号運用）。</p>
       <p style="font-size:12.5px;color:#71808F;margin-top:10px;">→ 詳しい使い方は <a href="admin-guide.html" style="color:#1E5BC6;font-weight:700;">管理画面 運用ガイド</a> へ。</p>
+    </div>
+  </div>
+
+  <!-- ＋ 自分の稼働・請求 -->
+  <div class="sec">
+    <h2><span class="n">＋</span>自分の稼働・お金も、本人画面で確認できます</h2>
+    <div class="sub">ワーカー自身が、いつでも自分のぶんだけ見られます（他の人とは比べません・ノルマも出しません）。</div>
+    <div class="parts">
+      <div class="part" style="border-left-color:#1AA06A"><div class="ic">📊</div><div class="ti">自分の稼働（/me）</div><div class="ro">＝今月のふりかえり</div><div class="de">今月／今週の稼働時間・稼働日数・1日平均・日ごとのグラフ。長くがんばった月は「休んでね」とやさしくお知らせ。</div></div>
+      <div class="part" style="border-left-color:var(--accent)"><div class="ic">🧾</div><div class="ti">請求・お支払（/billing）</div><div class="ro">＝書類づくりも画面で</div><div class="de">当月の稼働から<b>納品書・請求書を自動作成してCanPassへ提出</b>。発行した書類は<b>印刷ボタンでPDF保存</b>。CanPassからの<b>お支払明細</b>もここで受け取れます。</div></div>
+    </div>
+    <div class="card" style="font-size:13.3px;color:#41505e;margin-top:12px;">
+      請求書は、稼働時間（または<b>成果物の件数＝出来高</b>）と契約（単価・<b>源泉徴収・インボイス区分</b>）から金額を自動計算します。封入・宛名などのアナログ案件は「件数×単価」で、デスクワークは「時間×単価」で、両方ある人は<b>併用</b>で計算。消費税・源泉徴収・差引のご請求額まで内訳が出るので、<b>そのまま提出</b>できます。確定（お支払）はCanPass側で確認のうえ行い、<b>お支払明細（源泉控除後の振込額）</b>が発行されます。
     </div>
   </div>
 
