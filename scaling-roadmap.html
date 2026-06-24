@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="ja"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>CanPass ワーカーアプリ ・ 脆弱性 / コスト / 拡張ロードマップ</title>
+<style>
+:root{--brand:#1E5BC6;--accent:#D9744A;--ink:#1A2230;--gray:#71808F;--line:#E3E8EF;--bg:#F5F7FB;--card:#fff;--navy:#11243B;--green:#1AA06A;--code:#0b3a5b;--codebg:#f3f6fb;--red:#C0392B;--amber:#B7791F;}
+*{margin:0;box-sizing:border-box;}
+html,body{background:var(--bg);color:var(--ink);font-family:-apple-system,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;-webkit-font-smoothing:antialiased;line-height:1.7;}
+.wrap{max-width:900px;margin:0 auto;padding:42px 20px 90px;}
+.head{display:flex;align-items:center;gap:16px;border-bottom:3px solid var(--navy);padding-bottom:18px;}
+.bn{font-size:32px;font-weight:900;letter-spacing:-.02em;}.bn .i{color:var(--brand);}
+.htext .t{font-size:15px;font-weight:800;color:var(--navy);}.htext .s{font-size:12.5px;color:var(--gray);margin-top:2px;}
+.back{display:inline-block;font-size:12.5px;color:var(--brand);text-decoration:none;margin-top:14px;font-weight:700;}
+.toc{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 20px;margin:20px 0;column-count:2;column-gap:24px;font-size:13px;}
+.toc a{color:var(--brand);text-decoration:none;display:block;padding:2px 0;}
+@media(max-width:560px){.toc{column-count:1;}}
+.sec{margin-top:36px;scroll-margin-top:14px;}
+.sec h2{font-size:18px;color:var(--navy);border-left:5px solid var(--brand);padding-left:10px;margin-bottom:10px;}
+.sec h3{font-size:14.5px;color:var(--navy);margin:16px 0 6px;}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:10px 0;font-size:13.5px;color:#33414f;}
+p{font-size:13.8px;color:#33414f;}
+ul{font-size:13.6px;color:#33414f;margin:6px 0 6px 20px;}
+li{margin:3px 0;}
+code{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:12.3px;color:var(--code);background:var(--codebg);border:1px solid #e1e8f2;border-radius:5px;padding:1px 5px;}
+table{width:100%;border-collapse:collapse;font-size:12.6px;margin:8px 0;}
+th,td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top;}
+th{background:#eef3fb;color:var(--navy);font-weight:700;}
+td code{font-size:11.6px;}
+.pill{display:inline-block;font-size:11px;font-weight:700;border-radius:6px;padding:1px 7px;background:#eef3fb;color:var(--brand);}
+.sev{display:inline-block;font-size:11px;font-weight:800;border-radius:6px;padding:1px 8px;white-space:nowrap;}
+.s-red{background:#FCE8E6;color:var(--red);}
+.s-amber{background:#FEF3DC;color:var(--amber);}
+.s-low{background:#EAF2EC;color:var(--green);}
+.note{background:#FFF8EE;border:1px solid #F3E2C2;border-radius:10px;padding:12px 16px;font-size:13px;color:#6b5526;margin:10px 0;}
+.kpi{background:#0d1b2a;color:#d7e3f0;border-radius:10px;padding:14px 16px;font-size:13px;margin:10px 0;}
+.kpi b{color:#fff;}
+.stage{border:1px solid var(--line);border-left:5px solid var(--brand);border-radius:10px;padding:14px 16px;margin:12px 0;background:#fff;}
+.stage .h{font-size:14.5px;font-weight:800;color:var(--navy);}
+.stage .meta{font-size:12px;color:var(--gray);margin:3px 0 8px;}
+.stage.s0{border-left-color:var(--green);}
+.stage.s1{border-left-color:var(--brand);}
+.stage.s2{border-left-color:var(--accent);}
+.stage.s3{border-left-color:var(--red);}
+.foot{margin-top:46px;padding-top:16px;border-top:1px solid var(--line);font-size:11.5px;color:var(--gray);line-height:1.7;}
+</style></head><body>
+<div class="wrap">
+
+  <div class="head">
+    <div class="bn"><span class="i">i</span> CanPass</div>
+    <div class="htext">
+      <div class="t">ワーカーアプリ ・ 脆弱性 / コスト / 拡張ロードマップ</div>
+      <div class="s">現仕様の弱点・ユーザビリティ低下リスク・規模別コスト・リファクタリング分岐点 ・ 社外秘（L2機密）</div>
+    </div>
+  </div>
+  <a class="back" href="index.html">← 関係者限定ポータルへ戻る</a>
+  <a class="back" href="engineering-spec.html" style="margin-left:14px;">技術仕様書（前提）→</a>
+
+  <div class="toc">
+    <a href="#tldr">0. 結論（一読で分かる分岐点）</a>
+    <a href="#weak">1. 現仕様の弱点（脆弱性）</a>
+    <a href="#ux">2. ユーザビリティ低下リスク</a>
+    <a href="#cost">3. コスト試算（規模別）</a>
+    <a href="#limit">4. アーキの上限値（定量）</a>
+    <a href="#roadmap">5. 拡張ロードマップ（Stage 0–3）</a>
+    <a href="#order">6. 着手順（時系列）</a>
+  </div>
+
+  <div class="sec" id="tldr">
+    <h2>0. 結論（一読で分かる分岐点）</h2>
+    <div class="card">
+      <p>現アーキ（Next.js on Vercel ＋ <b>Notion を主データストア</b>）は <b>v0 として妥当</b>で、パイロット〜10名規模は問題なく回せる。延命の鍵は2つ。</p>
+      <ul>
+        <li><b>本番でPIIを扱う前に直すべき1点</b>：暴走課金の停止スイッチ（<code>.canpass-usage.json</code>）とレート制限がローカルファイル / インスタンス内メモリ依存で、サーバーレス本番では<b>事実上効かない</b>。Upstash等の外部状態に出す。</li>
+        <li><b>本格的なリファクタの分岐点は「Notion離れ」</b>：稼働ログ行数が <b>~3〜5万行</b>、または朝の<b>同時チェックインが ~8〜10人</b>を超えると、Notion API（平均3 req/s・100件/ページ）が律速になり、管理画面の集計が関数タイムアウト域に入る。ここで主データストアを実DB（Postgres）へ移し、Notionは人が見るミラーに降格させる。</li>
+      </ul>
+      <p>大づかみの寿命：<b>〜10名＝現状維持</b> ／ <b>10〜30名＝外部状態＋キャッシュで延命</b> ／ <b>30〜100名＝データ層をNotionから移設</b> ／ <b>100名〜＝SaaS化（Phase1・渡邊）</b>。</p>
+    </div>
+  </div>
+
+  <div class="sec" id="weak">
+    <h2>1. 現仕様の弱点（脆弱性）</h2>
+    <p>セキュリティ診断（v1.2）で指摘・対応済みのコード脆弱性とは別に、<b>規模拡大で効いてくる構造的な弱点</b>を重大度順に挙げる。「対応済」はセキュリティ診断で実装済みのもの。</p>
+    <table>
+      <tr><th>#</th><th>重大度</th><th>弱点</th><th>何が起きるか / なぜ脆いか</th><th>対策</th></tr>
+      <tr>
+        <td>1</td><td><span class="sev s-red">High</span></td>
+        <td>停止スイッチ・課金上限がローカルファイル依存</td>
+        <td><code>MONTHLY_TOKEN_BUDGET</code> の集計が <code>.canpass-usage.json</code>（ローカルFS）。Vercelの読取専用FS＋多インスタンスでは永続せず、再起動・分散で<b>カウンタがリセット／回避</b>。暴走課金の最終防衛線が本番で機能しない。</td>
+        <td>使用量を外部KV（Upstash/Vercel KV）に集約。日次・月次の硬い上限とアラート。</td>
+      </tr>
+      <tr>
+        <td>2</td><td><span class="sev s-red">High</span></td>
+        <td>Notion を主データストアにしている（単一律速点）</td>
+        <td>全ログイン・チェックイン・稼働記録・管理集計がNotion API（<b>平均3 req/s</b>・1ページ<b>100件</b>）に集中。同時接続・行数増で <b>429／タイムアウト</b>。トランザクション・一意制約がなく、再送で<b>重複行・欠損</b>が出る（後述の請求の正しさに波及）。</td>
+        <td>閾値超で実DB（Postgres）へ。Notionは write-through ミラーへ降格（§5 Stage2）。</td>
+      </tr>
+      <tr>
+        <td>3</td><td><span class="sev s-amber">Med</span></td>
+        <td>レート制限がインスタンス内メモリ</td>
+        <td>サーバーレスの複数インスタンスに分散すると上限を回避され、コールドスタートでリセット。ブルートフォースの多層防御が薄い。<span class="pill">診断で指摘済・Upstash化は7月上旬タスク</span></td>
+        <td>Upstash Ratelimit（Redis）へ差し替え。</td>
+      </tr>
+      <tr>
+        <td>4</td><td><span class="sev s-amber">Med</span></td>
+        <td>管理者が単一共有パスコード（個人アカウント・監査ログなし）</td>
+        <td>星加＋PMなど<b>2人以上</b>が管理画面を使うと、誰が何を見た・変えたを追えない。個別失効もできない。医療隣接のL3（実名↔符号・ヘルスログ・請求）を扱う以上、<b>監査証跡の欠如</b>はコンプラ上の弱点。</td>
+        <td>管理者を個人アカウント化（RBAC）＋操作監査ログ。</td>
+      </tr>
+      <tr>
+        <td>5</td><td><span class="sev s-amber">Med</span></td>
+        <td>稼働時間・出来高がクライアント計測値由来（請求の正しさ）</td>
+        <td>能動時間はブラウザ計測、出来高件数は手入力。これが<b>実際の支払い</b>（源泉・インボイス）に直結する。重複ログや改変を検知する仕組みがなく、金額の<b>監査可能性が弱い</b>。</td>
+        <td>記録にidempotencyキー、サーバー側で再集計・整合チェック、変更履歴。請求ライブ化の前に必須。</td>
+      </tr>
+      <tr>
+        <td>6</td><td><span class="sev s-amber">Med</span></td>
+        <td>長尺処理を関数内で同期実行（文字起こし）</td>
+        <td>AssemblyAIの長尺STTやチャットストリームを関数内で待つと、同時実行が増えるほどVercelの<b>実行時間上限</b>（Hobby既定10s）に当たる。Blobの一時ファイル後始末漏れの余地も。</td>
+        <td>非同期ジョブ化（QStash/Inngest）＋ポーリング。Pro移行で実行時間枠拡大。</td>
+      </tr>
+      <tr>
+        <td>7</td><td><span class="sev s-amber">Med</span></td>
+        <td>Vercel Hobby を本番に使っている</td>
+        <td>Hobbyは<b>ToS上は非商用</b>。同時実行・帯域・実行時間にも制限。商用ローンチをHobbyのまま続けると規約・性能の両面でリスク。</td>
+        <td>商用ローンチ前にVercel Pro（$20/月）へ。</td>
+      </tr>
+      <tr>
+        <td>8</td><td><span class="sev s-low">Low</span></td>
+        <td>Notion単一インテグレーショントークンで4DBに到達</td>
+        <td>1トークン漏洩＝4DB全部が露出する爆発半径。</td>
+        <td>DB移設時に権限分離。当面はトークンの厳格秘匿・ローテーション。</td>
+      </tr>
+      <tr>
+        <td>9</td><td><span class="sev s-low">Low</span></td>
+        <td>cronのrebalanceがデモ用“見せデータ”に結合</td>
+        <td>worker-A/B/Cへ実稼働を3分割する処理が本番ロジックに混在。実ワーカー投入時に取り違えの余地。</td>
+        <td>本番化時にデモ専用経路を分離・撤去。</td>
+      </tr>
+      <tr>
+        <td>10</td><td><span class="sev s-low">Low</span></td>
+        <td>ポータルはJSゲート（真のアクセス制御ではない）</td>
+        <td>URL・PWは推測されにくいだけ。関係者・資料が増えるほど漏えい面が拡大。</td>
+        <td>機微資料は本物の認証配下へ。現状は共有先の管理で運用。</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="sec" id="ux">
+    <h2>2. ユーザビリティ低下リスク（負荷増で何が壊れるか）</h2>
+    <p>「同時接続が増えた朝」「ログが貯まった数ヶ月後」に、ワーカー・管理者の体験がどう劣化するか。</p>
+    <table>
+      <tr><th>場面</th><th>劣化の中身</th><th>効いてくる規模</th></tr>
+      <tr><td>朝の一斉チェックイン</td><td>1ログイン＝記録＋ヘルス書込＋アサイン読込で<b>3〜5 Notionコール</b>。同時に集中するとNotion 429で<b>ログイン・記録が失敗</b>（"記録できませんでした"）。</td><td>同時チェックイン <b>~8〜10人</b>〜</td></tr>
+      <tr><td>管理画面（8タブ）</td><td>各タブが毎回Notion全行を取得しJSで集計（<code>aggregateWorkers</code>）。キャッシュなし。行数増で<b>表示が数秒→タイムアウト</b>。タブ往復のたびに再クエリ。</td><td>ログ <b>~1〜2万行</b>でp95悪化、<b>~3〜5万行</b>で限界</td></tr>
+      <tr><td>AIチャット</td><td>同時ストリームが関数の同時実行枠を消費。Hobbyの同時実行制限で<b>応答待ち・キューイング</b>。月次トークン上限到達で突然<b>デモ応答に転落</b>し、作業途中で混乱。</td><td>同時チャット <b>~10〜20</b>／上限設計依存</td></tr>
+      <tr><td>初回アクセス（PWA）</td><td>Hobbyのコールドスタートで初回 <b>1〜3秒</b>待ち。スマホで「重い」印象。</td><td>常時。Pro/常時稼働で緩和</td></tr>
+      <tr><td>管理テーブル描画</td><td>ページネーション・仮想化なしの一覧は、行数増でブラウザ側も重くなる。</td><td>表示行 <b>数百〜千</b>超</td></tr>
+      <tr><td>請求の信頼性</td><td>重複・欠損ログ上の集計だと金額がぶれ、ワーカーからの<b>問い合わせ・不信</b>につながる。</td><td>請求ライブ化以降つねに</td></tr>
+    </table>
+    <div class="note">要点：UX劣化は「ユーザー数」より先に<b>①朝の同時接続</b>と<b>②累積ログ行数</b>で来る。人数が同じでも、稼働が活発でログが増えるほど管理画面から先に重くなる。</div>
+  </div>
+
+  <div class="sec" id="cost">
+    <h2>3. コスト試算（規模別・月額）</h2>
+    <p>固定（SaaSサブスク・構成非依存）＋変動（AI従量）＋閾値超えで足すインフラ。為替¥155/USD・Sonnet 4.6中心・1セッション¥22〜25前提（出典：<code>code/build_cost_estimate.py</code>）。</p>
+    <table>
+      <tr><th>区分</th><th>項目</th><th>パイロット<br>(5名)</th><th>本番初期<br>(20名)</th><th>拡大<br>(50名)</th></tr>
+      <tr><td rowspan="2">固定（SaaS）</td><td>Claude運用サブスク(Max 5x)・Notion×2・Google WS×2・GitHub</td><td>¥20,600</td><td>¥20,600</td><td>¥20,600</td></tr>
+      <tr><td><span style="color:var(--gray)">※運用者環境。既存共有なら実質ゼロ計上も可</span></td><td colspan="3" style="color:var(--gray)">構成によらず共通</td></tr>
+      <tr><td rowspan="2">変動（AI従量）</td><td>Claudeチャット（セッション数×単価）</td><td>~¥11,000<br><span style="color:var(--gray)">440×¥25</span></td><td>~¥66,000<br><span style="color:var(--gray)">2,640×¥25</span></td><td>~¥145,000<br><span style="color:var(--gray)">6,600×¥22</span></td></tr>
+      <tr><td>文字起こし(AssemblyAI)＋Gemini補助</td><td>~¥700</td><td>~¥2,200</td><td>~¥5,200</td></tr>
+      <tr><td rowspan="3">追加インフラ<br>（閾値超で発生）</td><td>Vercel Pro（$20）</td><td>—</td><td>¥3,100</td><td>¥3,100</td></tr>
+      <tr><td>Upstash（レート制限・使用量・キャッシュ）</td><td>無料枠</td><td>~¥1,500</td><td>~¥1,500</td></tr>
+      <tr><td>Managed Postgres（Supabase/Neon・データ移設後）</td><td>—</td><td>—</td><td>~¥3,900</td></tr>
+      <tr><td style="background:#eef3fb;font-weight:800">合計（目安）</td><td style="background:#eef3fb"></td><td style="background:#eef3fb;font-weight:800">~¥32,000</td><td style="background:#eef3fb;font-weight:800">~¥93,000</td><td style="background:#eef3fb;font-weight:800">~¥180,000</td></tr>
+    </table>
+    <div class="kpi">
+      <b>コストの性質</b>：固定費は規模で増えない。総額の<b>7〜8割はClaudeチャットの従量</b>で、<b>セッション数にほぼ比例</b>する。<br>
+      → コスト最適化の打ち手は「インフラ」より<b>①プロンプトキャッシュ／SOP圧縮で1セッション単価を下げる ②モデル階層（要約・定型はHaiku）</b>。拡大時に単価¥25→¥22に下げる前提もこれ。<br>
+      <b>1ワーカー1ヶ月の限界費用 ≒ ¥3,000〜3,500</b>（22日×6セッション×¥22〜25）。粗利設計はこの単位原価を基準にできる。
+    </div>
+  </div>
+
+  <div class="sec" id="limit">
+    <h2>4. アーキの上限値（定量）</h2>
+    <p>リファクタの分岐点を判断するための実数。</p>
+    <table>
+      <tr><th>律速点</th><th>現アーキの上限の目安</th><th>根拠</th></tr>
+      <tr><td>Notion API スループット</td><td>平均 <b>3 req/s</b>（バースト可）</td><td>Notion公開レート。1ログイン3〜5コール→同時 ~8〜10人で接触</td></tr>
+      <tr><td>集計の取得行数</td><td>1ページ<b>100件</b>・全件取得</td><td>20名×22日×~15イベント ≈ <b>6,600行/月</b>。3〜4ヶ月で~2万行→200ページ取得</td></tr>
+      <tr><td>Vercel関数 実行時間</td><td>Hobby既定 <b>10s</b>（Pro 最大300s）</td><td>全件取得＋JS集計が積み上がるとここに当たる</td></tr>
+      <tr><td>同時実行・帯域</td><td>Hobbyに制限・<b>非商用ToS</b></td><td>商用はPro前提</td></tr>
+      <tr><td>暴走課金の停止</td><td>本番で<b>実質無効</b>（ローカルFS）</td><td>サーバーレスFSは非永続・多インスタンス</td></tr>
+    </table>
+    <div class="note">監視すべき先行指標（これを観測したら次Stageへ）：<b>管理画面 p95 &gt; 2〜3秒</b> ／ <b>Notion 429 の発生</b> ／ <b>稼働ログ行数 &gt; 1〜2万</b> ／ <b>朝の同時ログイン &gt; 8人</b> ／ <b>関数タイムアウトの発生</b>。</div>
+  </div>
+
+  <div class="sec" id="roadmap">
+    <h2>5. 拡張ロードマップ（Stage 0–3）</h2>
+    <p>「人数」と「同時接続」と「ログ行数」のどれかが閾値に触れたら次へ。人数だけで判断しない。</p>
+
+    <div class="stage s0">
+      <div class="h">Stage 0 ・ v0 / パイロット（現状）</div>
+      <div class="meta">アクティブ ~10名 ／ 同時接続 ~5 ／ ログ &lt; ~5,000行 ／ 月 ~¥32,000</div>
+      <p><b>現アーキのまま。</b>ただし<b>実PII投入の前に</b>下記だけは閉じる（安全側）。</p>
+      <ul>
+        <li><b>停止スイッチ・レート制限を外部状態へ</b>（Upstash）。暴走課金とブルートフォースの実効防御。<span class="pill">最優先・7月上旬</span></li>
+        <li><code>SESSION_SECRET</code> 本番フェイルクローズ・管理者鍵分離（<span class="pill">診断で対応済</span>・本番env設定の確認だけ）。</li>
+        <li>デモパスコードのrotate徹底（実ワーカー発番時）。</li>
+      </ul>
+    </div>
+
+    <div class="stage s1">
+      <div class="h">Stage 1 ・ 本番初期（延命）</div>
+      <div class="meta">アクティブ 10〜30名 ／ 同時接続 5〜15 ／ ログ 5k〜3万行 ／ 月 ~¥93,000</div>
+      <p><b>Notionは主データのまま、前段に外部状態とキャッシュを足して延命する。</b></p>
+      <ul>
+        <li><b>集計キャッシュ</b>（Vercel KV/Redis・TTL 30〜60秒）。管理画面の毎回全件取得をやめる。<b>トリガー：p95 &gt; 2秒 か 429発生</b>。</li>
+        <li><b>Vercel Pro へ</b>（実行時間・同時実行・商用ToS）。<b>トリガー：商用ローンチ／関数タイムアウト</b>。</li>
+        <li><b>書込みの一意化・冪等化</b>（再送で重複行を作らない）。請求ライブ化の前提。</li>
+        <li>管理テーブルにページネーション／仮想化。</li>
+      </ul>
+    </div>
+
+    <div class="stage s2">
+      <div class="h">Stage 2 ・ スケール（データ層リファクタ＝本丸）</div>
+      <div class="meta">アクティブ 30〜100名 ／ 同時接続 15〜50 ／ ログ &gt; 3〜5万行 ／ 月 ~¥180,000</div>
+      <p><b>主データストアをNotionから実DB（Postgres：Supabase/Neon/Vercel Postgres）へ移す。</b>Notionは人が見るミラー（write-through）に降格、または廃止。集計はSQL／マテビューで定数時間に。</p>
+      <ul>
+        <li><b>移行トリガー（いずれか）</b>：キャッシュしてもNotion 429が継続 ／ ログ行数 <b>&gt; ~5万</b> ／ 朝の同時チェックイン <b>&gt; ~30</b> ／ 集計が関数枠内で完了しない。</li>
+        <li><b>管理者RBAC＋監査ログ</b>。<b>トリガー：管理者が2人以上 or L3データの監査要件</b>。</li>
+        <li><b>請求のサーバー側整合チェック・変更履歴</b>。<b>トリガー：請求が実支払いに直結したら</b>。</li>
+        <li>長尺処理の非同期ジョブ化（QStash/Inngest）。</li>
+      </ul>
+    </div>
+
+    <div class="stage s3">
+      <div class="h">Stage 3 ・ SaaS化（Phase1・担当 渡邊）</div>
+      <div class="meta">アクティブ 100〜500+名 ／ マルチテナント（複数クライアント企業）／ 同時接続 50〜200+</div>
+      <p><b>専用システム化。</b>自前認証・単一テナント前提を卒業する。</p>
+      <ul>
+        <li>マネージド認証（Clerk/Auth0/NextAuth）＋ <b>マルチテナントのデータ分離</b>・テナント別RBAC。</li>
+        <li>バックグラウンドジョブ基盤・キュー。</li>
+        <li>観測性（Sentry・メトリクス・アラート）と、医療隣接に見合うセキュリティ姿勢（アクセス監査・暗号化・データ保持方針）。</li>
+        <li>必要に応じ長時間処理をコンテナ実行へ（サーバーレスの枠を外す）。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sec" id="order">
+    <h2>6. 着手順（時系列・推奨）</h2>
+    <ol style="font-size:13.6px;color:#33414f;margin-left:20px;">
+      <li><b>即時（実PII投入前）</b>：停止スイッチ＋レート制限を外部状態へ（Stage0）。本番env（<code>SESSION_SECRET</code> 等）の設定確認。</li>
+      <li><b>ローンチ前後</b>：Vercel Pro移行・集計キャッシュ・書込み冪等化（Stage1）。請求をライブにするなら整合チェックを同時に。</li>
+      <li><b>30名 or 429常態化 or 5万行が見えたら</b>：データ層をNotion→Postgresへ。RBAC＋監査（Stage2）。ここが最大のリファクタ。</li>
+      <li><b>複数クライアント企業へ展開する段</b>：SaaS化（Stage3・Phase1）。</li>
+    </ol>
+    <div class="note">判断の物差しは人数ではなく<b>先行指標</b>（§4）。同じ人数でも稼働が濃ければログ行数で先に限界が来る。ダッシュボードのp95とNotion 429を監視に出しておけば、勘ではなく数字で次Stageに進める。</div>
+  </div>
+
+  <div class="foot">
+    社外秘 / L2機密 ・ 2026-06-24 ／ i CanPass ・ ワーカーアプリ（v0）拡張ロードマップ<br>
+    ※ 前提＝<a href="engineering-spec.html">技術仕様書</a>。コスト出典＝<code>code/build_cost_estimate.py</code>。セキュリティ詳細＝脆弱性診断レポート v1.2。実名・原本・鍵は扱いません（符号運用）。
+  </div>
+</div>
+</body></html>
