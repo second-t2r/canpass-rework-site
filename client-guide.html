@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="ja"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>CanPass 顧客ワークスペース ・ 画面デモ</title>
+<style>
+:root{--brand:#1E5BC6;--accent:#D9744A;--ink:#1A2230;--gray:#71808F;--line:#E3E8EF;--bg:#F5F7FB;--card:#fff;--navy:#11243B;--green:#1AA06A;--canpassgreen:#0f9d6e;}
+*{margin:0;box-sizing:border-box;}
+html,body{background:var(--bg);color:var(--ink);font-family:-apple-system,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;-webkit-font-smoothing:antialiased;line-height:1.7;}
+.wrap{max-width:880px;margin:0 auto;padding:42px 20px 80px;}
+.head{display:flex;align-items:center;gap:16px;border-bottom:3px solid var(--canpassgreen);padding-bottom:18px;}
+.bn{font-size:34px;font-weight:900;letter-spacing:-.02em;}
+.bn .i{color:var(--brand);}
+.htext .t{font-size:15px;font-weight:800;color:var(--navy);}
+.htext .s{font-size:12.5px;color:var(--gray);margin-top:2px;}
+.lead{font-size:14px;color:var(--gray);margin:18px 0 8px;}
+.back{display:inline-block;font-size:12.5px;color:var(--brand);text-decoration:none;margin-top:10px;font-weight:700;}
+
+.start{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;margin:24px 0;box-shadow:0 2px 10px rgba(20,50,90,.05);}
+.start h2{font-size:17px;color:var(--navy);margin-bottom:12px;display:flex;align-items:center;gap:9px;}
+.start h2 .dot{width:11px;height:11px;border-radius:3px;background:var(--canpassgreen);}
+.url{display:inline-block;font-size:14px;font-weight:700;color:var(--brand);word-break:break-all;text-decoration:none;background:#EEF3FC;border-radius:8px;padding:7px 11px;}
+.cred{margin-top:12px;font-size:13.5px;}
+.cred b{display:inline-block;min-width:120px;color:var(--gray);font-weight:600;}
+.cred code{background:#F0F2F6;border-radius:6px;padding:2px 8px;font-size:13.5px;font-weight:700;color:var(--ink);}
+.pw{display:inline-block;font-size:11px;font-weight:800;color:#9c4a26;background:#FCEDE5;border-radius:999px;padding:3px 10px;margin-left:6px;vertical-align:middle;}
+
+.feat{display:flex;gap:18px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin:18px 0;box-shadow:0 2px 8px rgba(20,50,90,.04);}
+.feat .bd{flex:1;min-width:0;}
+.tabname{display:inline-block;font-size:11.5px;font-weight:800;color:#fff;background:var(--canpassgreen);border-radius:7px;padding:3px 10px;margin-bottom:8px;}
+.feat h3{font-size:17px;color:var(--navy);margin:2px 0 8px;}
+.feat p{font-size:13.8px;color:#41505e;margin:6px 0;}
+.feat ul{margin:6px 0 0;padding-left:20px;}
+.feat li{font-size:13.5px;color:#41505e;margin:4px 0;}
+.shot{width:100%;border-radius:12px;border:1px solid #d8deea;box-shadow:0 6px 18px rgba(20,50,90,.10);display:block;margin:6px 0 2px;}
+.cap{font-size:11.5px;color:var(--gray);margin-top:4px;}
+
+.sec{margin-top:30px;}
+.sec h2{font-size:16px;color:var(--navy);display:flex;align-items:center;gap:9px;margin-bottom:12px;}
+.sec h2 .dot{width:10px;height:10px;border-radius:3px;background:var(--canpassgreen);}
+.gov{background:#EAF4FF;border:1px solid #CFE2F7;border-radius:14px;padding:16px 20px;font-size:13.5px;color:#1c4a7a;}
+.gov b{color:#0d3a66;}
+
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px;}
+.btn{flex:1;min-width:200px;text-align:center;text-decoration:none;border-radius:14px;padding:16px;font-size:15px;font-weight:800;}
+.btn.primary{background:var(--canpassgreen);color:#fff;}
+.btn.sub{background:#fff;color:var(--brand);border:2px solid var(--brand);}
+
+.foot{margin-top:42px;padding-top:16px;border-top:1px solid var(--line);font-size:11.5px;color:var(--gray);line-height:1.7;}
+@media(max-width:560px){.bn{font-size:28px;}.cred b{min-width:0;display:block;margin-bottom:2px;}}
+</style></head><body>
+<div class="wrap">
+
+  <div class="head">
+    <div class="bn"><span class="i">i</span> CanPass</div>
+    <div class="htext">
+      <div class="t">顧客ワークスペース ・ 画面デモ</div>
+      <div class="s">委託元企業向け ・ 委託／進捗／成果物／請求を1画面で ・ 社外秘（L2機密）</div>
+    </div>
+  </div>
+
+  <div class="lead">
+    CanPass に業務を委託する<b>企業側の画面</b>のデモです。<br>
+    顧客はWebにログインして、<b>依頼の作成・進捗の確認・成果物の受領・請求の確認・SaaS連携</b>を1か所で行えます。
+    自社の案件だけが表示され、担い手（ワーカー）の個人情報は出ません。
+  </div>
+  <a class="back" href="index.html">← 関係者限定ポータルへ戻る</a>
+
+  <!-- アクセス -->
+  <div class="start">
+    <h2><span class="dot"></span>入り方（デモ）</h2>
+    <a class="url" href="https://worker-app-sooty.vercel.app/client/login" target="_blank" rel="noopener">worker-app-sooty.vercel.app/client/login</a>
+    <div class="cred">
+      <div style="margin-top:8px;"><b>デモアカウント</b> <code>keiri@example.co.jp</code></div>
+      <div style="margin-top:6px;"><b>パスコード</b> <code>（別途共有）</code> <span class="pw">デモ用</span></div>
+    </div>
+    <p style="font-size:12px;color:var(--gray);margin-top:12px;">※ 招待制です。実際の顧客アカウントは担当のCanPassが発行します。データはデモ案件のサンプルです。</p>
+  </div>
+
+  <!-- ダッシュボード -->
+  <div class="feat">
+    <div class="bd">
+      <span class="tabname">ホーム</span>
+      <h3>依頼の状況をひと目で</h3>
+      <p>進行中・確認待ち・今月の完了・今月の請求をカードで表示。最近の動きに直近の依頼と状態が並びます。担当は「CanPassチーム」表示で、担い手個人の情報は出ません。</p>
+      <img class="shot" src="assets/client/client-01-dashboard.png" alt="ホーム（ダッシュボード）">
+      <div class="cap">ホーム：KPIカード＋最近の動き</div>
+    </div>
+  </div>
+
+  <!-- 委託する -->
+  <div class="feat">
+    <div class="bd">
+      <span class="tabname">委託する</span>
+      <h3>依頼をそのまま送る</h3>
+      <p>業務名・種類・指示・締切を書いて送るだけ。領収書やCSVを添付できます（個人情報は取り込み時にマスキング）。送信すると自動で起票され、CanPassチームが担当をアサインします。</p>
+      <img class="shot" src="assets/client/client-02-new.png" alt="委託する（依頼作成）">
+      <div class="cap">委託する：業務内容・締切・ファイル添付</div>
+    </div>
+  </div>
+
+  <!-- 進捗 一覧 -->
+  <div class="feat">
+    <div class="bd">
+      <span class="tabname">進捗</span>
+      <h3>自社の依頼だけを一覧で</h3>
+      <p>依頼の担当・締切・進捗・状態を一覧表示。他社の案件は表示されません（サーバ側で自社案件に固定）。各行から詳細に進めます。</p>
+      <img class="shot" src="assets/client/client-03-requests.png" alt="進捗一覧">
+      <div class="cap">進捗：自社案件のみ・担当は「CanPassチーム」</div>
+    </div>
+  </div>
+
+  <!-- 進捗 詳細 -->
+  <div class="feat">
+    <div class="bd">
+      <span class="tabname">進捗詳細</span>
+      <h3>状態の確認と、追加の指示</h3>
+      <p>状態・進捗・締切・納品物を確認できます。追加の指示や質問をその場で送信でき、担当が受け取ります。社内の作業メモは表示しません。</p>
+      <img class="shot" src="assets/client/client-04-detail.png" alt="進捗詳細">
+      <div class="cap">進捗詳細：確認と追加指示（顧客向け項目のみ）</div>
+    </div>
+  </div>
+
+  <!-- 成果物 -->
+  <div class="feat">
+    <div class="bd">
+      <span class="tabname">成果物</span>
+      <h3>受け取って、承認する</h3>
+      <p>できあがった成果物をダウンロードし、承認または差戻しを選べます。承認すると請求の対象に反映されます。SaaSへの書き込みは、承認の後に実行します。</p>
+      <img class="shot" src="assets/client/client-05-deliverables.png" alt="成果物の受領・承認">
+      <div class="cap">成果物：確認待ちと受領済み・承認／差戻し</div>
+    </div>
+  </div>
+
+  <!-- 請求 -->
+  <div class="feat">
+    <div class="bd">
+      <span class="tabname">請求</span>
+      <h3>承認済みの作業を月別に</h3>
+      <p>承認いただいた作業を月ごとに集計して表示します。金額入りの正式な請求書はPDFでお送りします。</p>
+      <img class="shot" src="assets/client/client-06-invoices.png" alt="請求">
+      <div class="cap">請求：承認済み作業の月次集計（金額は正式請求書で）</div>
+    </div>
+  </div>
+
+  <!-- 連携設定 -->
+  <div class="feat">
+    <div class="bd">
+      <span class="tabname">連携設定</span>
+      <h3>マネーフォワード等との連携（順次提供）</h3>
+      <p>会計・経費・勤怠SaaSとの連携を申請できます。最初の対象はマネーフォワード クラウド。「接続をリクエスト」するとCanPassが接続手続き（API認可・スコープ設定）を行います。実データの取り込み・書き込みは承認の後です。</p>
+      <img class="shot" src="assets/client/client-07-integrations.png" alt="連携設定">
+      <div class="cap">連携設定：マネーフォワードは接続リクエスト受付・他は準備中</div>
+    </div>
+  </div>
+
+  <!-- 原則 -->
+  <div class="sec">
+    <h2><span class="dot"></span>顧客画面の原則</h2>
+    <div class="gov">
+      <b>● 自社案件だけ。</b> 表示・操作は自社の案件に限定します（サーバ側で固定・URL改ざんでも他社は見えません）。<br>
+      <b>● 担い手の情報は出しません。</b> 担当は「CanPassチーム」。個人の実名・体調・稼働は顧客に表示しません。<br>
+      <b>● 承認してから反映。</b> 成果物の確定・SaaSへの書き込みは、顧客の承認の後に行います。<br>
+      <b>● 個人情報はマスキング。</b> 取り込むデータは作業前に伏せます（L3は外部に出しません）。
+    </div>
+  </div>
+
+  <div class="cta">
+    <a class="btn primary" href="https://worker-app-sooty.vercel.app/client/login" target="_blank" rel="noopener">▶ 顧客ワークスペースを開く</a>
+    <a class="btn sub" href="index.html">関係者限定ポータルへ戻る</a>
+  </div>
+
+  <div class="foot">
+    社外秘 / L2機密 ・ 2026 ／ i CanPass ・ 顧客ワークスペース（企業側）<br>
+    ※ 画面のデータはデモ案件のサンプルです。実名・顧客機密は扱いません（符号運用）。マネーフォワード連携の本接続は準備中です。
+  </div>
+</div>
+</body></html>
