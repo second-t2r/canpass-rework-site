@@ -2,103 +2,234 @@
 <html lang="ja"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow,noarchive">
-<title>CanPass ・ デモポータル（営業先共有用）</title>
+<title>CanPass ・ 体験ポータル</title>
 <style>
 :root{--brand:#1E5BC6;--accent:#D9744A;--ink:#1A2230;--gray:#71808F;--line:#E3E8EF;--bg:#F5F7FB;--card:#fff;--navy:#11243B;--green:#1AA06A;}
 *{margin:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
 html,body{background:var(--bg);color:var(--ink);font-family:-apple-system,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;-webkit-font-smoothing:antialiased;line-height:1.6;}
 .wrap{max-width:920px;margin:0 auto;padding:46px 20px 80px;}
 .head{display:flex;align-items:center;gap:16px;border-bottom:3px solid var(--brand);padding-bottom:20px;}
-.bn{font-size:40px;font-weight:900;letter-spacing:-.02em;}
+.bn{font-size:40px;font-weight:900;letter-spacing:-.02em;white-space:nowrap;}
 .bn .i{color:var(--brand);}
 .htext .t{font-size:15px;font-weight:800;color:var(--navy);}
 .htext .s{font-size:12.5px;color:var(--gray);margin-top:2px;}
-.lead{font-size:13.5px;color:var(--gray);margin:18px 0 26px;line-height:1.7;}
-.sec{margin-top:30px;}
-.sec h2{font-size:14px;font-weight:800;color:var(--navy);letter-spacing:.04em;display:flex;align-items:center;gap:10px;margin-bottom:4px;}
-.sec h2 .dot{width:10px;height:10px;border-radius:3px;background:var(--brand);}
-.sec .sub{font-size:12px;color:var(--gray);margin-bottom:12px;}
-.pw{display:inline-block;font-size:10.5px;font-weight:700;color:#9c4a26;background:#FCEDE5;border-radius:999px;padding:2px 9px;margin-left:4px;}
-.open{color:#176a48;background:#E5F4ED;}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-a.card{display:block;text-decoration:none;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--brand);border-radius:12px;padding:15px 17px;transition:.15s;box-shadow:0 2px 8px rgba(20,50,90,.04);}
+.lead{font-size:13.5px;color:var(--gray);margin:18px 0 8px;line-height:1.7;}
+
+/* 目的セレクタ */
+.pick{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:18px;}
+a.persona{display:block;text-decoration:none;background:var(--card);border:1px solid var(--line);border-top:4px solid var(--brand);border-radius:14px;padding:18px 16px;transition:.15s;box-shadow:0 2px 8px rgba(20,50,90,.04);}
+a.persona:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(20,50,90,.10);}
+a.persona .who{font-size:15px;font-weight:800;color:var(--navy);line-height:1.4;}
+a.persona .what{font-size:12px;color:var(--gray);margin-top:6px;line-height:1.55;}
+a.persona .go{font-size:12px;font-weight:700;color:var(--brand);margin-top:10px;}
+a.persona.grn{border-top-color:var(--green);}
+a.persona.acc{border-top-color:var(--accent);}
+a.persona.acc .go{color:var(--accent);}
+a.persona.grn .go{color:var(--green);}
+
+/* 順路セクション */
+.route{margin-top:44px;padding-top:8px;}
+.route h2{font-size:17px;font-weight:800;color:var(--navy);display:flex;align-items:center;gap:10px;}
+.route h2 .dot{width:12px;height:12px;border-radius:4px;background:var(--brand);flex:none;}
+.route .sub{font-size:12.5px;color:var(--gray);margin:6px 0 16px;line-height:1.7;}
+.route.grn h2 .dot{background:var(--green);}
+.route.acc h2 .dot{background:var(--accent);}
+
+.step{display:flex;gap:14px;margin-bottom:10px;}
+.step .no{flex:none;width:34px;height:34px;border-radius:50%;background:var(--navy);color:#fff;font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-top:14px;}
+.step .body{flex:1;}
+a.card{display:block;text-decoration:none;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--brand);border-radius:12px;padding:14px 17px;transition:.15s;box-shadow:0 2px 8px rgba(20,50,90,.04);}
 a.card:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(20,50,90,.10);border-left-color:var(--accent);}
 a.card .ti{font-size:15px;font-weight:700;color:var(--navy);}
-a.card .de{font-size:12px;color:var(--gray);margin-top:5px;line-height:1.5;}
-a.card.acc{border-left-color:var(--accent);}
-a.card.grn{border-left-color:var(--green);}
-.full{grid-column:1 / -1;}
-.foot{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-size:11.5px;color:var(--gray);line-height:1.7;}
-@media(max-width:620px){.grid{grid-template-columns:1fr;}.bn{font-size:32px;}}
+a.card .de{font-size:12px;color:var(--gray);margin-top:4px;line-height:1.55;}
+.route.grn a.card{border-left-color:var(--green);}
+.route.acc a.card{border-left-color:var(--accent);}
+.opt .no{background:#fff;color:var(--gray);border:2px solid var(--line);}
+.pw{display:inline-block;font-size:10.5px;font-weight:700;color:#9c4a26;background:#FCEDE5;border-radius:999px;padding:2px 9px;margin-left:6px;vertical-align:1px;}
+.open{color:#176a48;background:#E5F4ED;}
+.meta{display:inline-block;font-size:10.5px;font-weight:700;color:var(--gray);background:#EEF1F6;border-radius:999px;padding:2px 9px;margin-left:6px;vertical-align:1px;}
+
+/* 資料一覧 */
+.all{margin-top:50px;border-top:1px solid var(--line);padding-top:24px;}
+.all h2{font-size:14px;font-weight:800;color:var(--navy);margin-bottom:4px;}
+.all .sub{font-size:12px;color:var(--gray);margin-bottom:12px;}
+.list{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+a.mini{display:block;text-decoration:none;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:13px;font-weight:700;color:var(--navy);}
+a.mini:hover{border-color:var(--brand);}
+a.mini small{display:block;font-size:11px;font-weight:400;color:var(--gray);margin-top:2px;}
+
+.top{position:fixed;right:18px;bottom:18px;background:var(--navy);color:#fff;text-decoration:none;font-size:12px;font-weight:700;border-radius:999px;padding:9px 16px;box-shadow:0 6px 18px rgba(17,36,59,.25);}
+.foot{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);font-size:11.5px;color:var(--gray);line-height:1.7;}
+@media(max-width:680px){.pick{grid-template-columns:1fr;}.list{grid-template-columns:1fr;}.bn{font-size:30px;}.head{flex-wrap:wrap;}}
 </style></head><body>
 <div class="wrap">
 
   <div class="head">
     <div class="bn"><span class="i">i</span> CanPass</div>
     <div class="htext">
-      <div class="t">デモポータル（営業先共有用）</div>
-      <div class="s">i CanPass ／ Re:Work ／ Re:Work AI ・ デモ・体験用</div>
+      <div class="t">体験ポータル</div>
+      <div class="s">i CanPass ／ Re:Work ・ 資料と動くデモで CanPass のBPOを体験</div>
     </div>
   </div>
 
-  <div class="lead">CanPass のデモ・体験用ポータルです。営業先にそのまま共有できます。<span class="pw">PW</span> 付きの資料はパスワードで保護されています（パスワードは別途共有）。事業計画・財務などの機微資料は関係者限定ポータルに移設しました（URLは関係者にのみ別途共有）。</div>
+  <div class="lead">
+    CanPass のBPO（バックオフィス業務の委託サービス）を、資料と動くデモで体験できるポータルです。<br>
+    目的に合う入口を選ぶと、見る順番にそって資料とデモをご案内します。<span class="pw">PW</span> 付きの資料のパスワードは、ご案内の担当者からお受け取りください。
+  </div>
 
-  <!-- 一般公開 -->
-  <div class="sec">
-    <h2><span class="dot" style="background:var(--green)"></span>一般公開 <span class="pw open">公開</span></h2>
-    <div class="sub">どなたでも閲覧可</div>
-    <div class="grid">
-      <a class="card grn full" href="https://canpass.jp/"><div class="ti">CanPass 公式LP</div><div class="de">canpass.jp（一般公開）</div></a>
+  <!-- 目的セレクタ -->
+  <div class="pick">
+    <a class="persona" href="#for-clients">
+      <div class="who">業務の委託を検討している企業の方</div>
+      <div class="what">何をどこまで任せられるか、委託から請求までの画面を実際に見られます。</div>
+      <div class="go">順路を見る ↓</div>
+    </a>
+    <a class="persona grn" href="#for-workers">
+      <div class="who">ワーカーとして働くことを検討している方</div>
+      <div class="what">スマホだけで仕事がどう進むか、実際のアプリを触って確かめられます。</div>
+      <div class="go">順路を見る ↓</div>
+    </a>
+    <a class="persona acc" href="#for-pm">
+      <div class="who">PM・運営メンバーとして参画を検討している方</div>
+      <div class="what">ワーカーの現場と、稼働・体調・タスクを預かる管理画面の両方を見られます。</div>
+      <div class="go">順路を見る ↓</div>
+    </a>
+  </div>
+
+  <!-- 企業向け順路 -->
+  <div class="route" id="for-clients">
+    <h2><span class="dot"></span>企業の方向け ・ 委託を検討する順路</h2>
+    <div class="sub">全体像 → サービス内容 → 実際の画面、の順で見られます。1〜2だけでも概要はつかめます。</div>
+
+    <div class="step">
+      <div class="no">1</div><div class="body">
+      <a class="card" href="bpo-video.html"><div class="ti">▶ 紹介動画を見る<span class="meta">3分20秒</span><span class="pw">PW</span></div>
+      <div class="de">サービスの全体像と、企業側・ワーカー側・管理側の画面が動く様子を、映像でまとめて見られます。まずはこれだけでも。</div></a>
+    </div></div>
+
+    <div class="step">
+      <div class="no">2</div><div class="body">
+      <a class="card" href="bpo-salessheet.html"><div class="ti">セールスシートを読む<span class="meta">スライド13枚</span><span class="pw">PW</span></div>
+      <div class="de">委託できる業務の範囲、SaaS連携（マネーフォワード／freee／SmartHR）のつなぎ方2通り、料金の考え方。PPTXのダウンロードもできます。</div></a>
+    </div></div>
+
+    <div class="step">
+      <div class="no">3</div><div class="body">
+      <a class="card" href="client-guide.html"><div class="ti">顧客ワークスペースの画面を見る<span class="meta">画像入りガイド</span></div>
+      <div class="de">委託の作成 → 進捗 → 成果物の受領 → 請求まで、貴社側で使う画面を順に確認できます。</div></a>
+    </div></div>
+
+    <div class="step">
+      <div class="no">4</div><div class="body">
+      <a class="card" href="https://worker-app-sooty.vercel.app/client/login" target="_blank" rel="noopener"><div class="ti">▶ 顧客ワークスペースを実際に触る<span class="meta">デモログイン</span></div>
+      <div class="de">デモアカウント（keiri@example.co.jp）でログインし、委託から請求までの画面を操作できます。パスコードはご案内の担当者から。</div></a>
+    </div></div>
+
+    <div class="step opt">
+      <div class="no">＋</div><div class="body">
+      <a class="card" href="admin-guide.html"><div class="ti">運用のしくみも見る（任意）</div>
+      <div class="de">CanPass側がワーカーの稼働・体調・品質をどう管理しているか。安心材料として、管理画面の運用ガイドを公開しています。</div></a>
+    </div></div>
+  </div>
+
+  <!-- ワーカー向け順路 -->
+  <div class="route grn" id="for-workers">
+    <h2><span class="dot"></span>ワーカー候補の方向け ・ 働き方を体験する順路</h2>
+    <div class="sub">読む → 触る → 不安を解消する、の順です。スマホだけで体験できます。</div>
+
+    <div class="step">
+      <div class="no">1</div><div class="body">
+      <a class="card" href="https://canpass.jp/" target="_blank" rel="noopener"><div class="ti">公式サイトで CanPass を知る<span class="pw open">公開</span></div>
+      <div class="de">canpass.jp。治療と両立しながら在宅で働く、という CanPass の考え方をまず確認できます。</div></a>
+    </div></div>
+
+    <div class="step">
+      <div class="no">2</div><div class="body">
+      <a class="card" href="worker-app-guide.html"><div class="ti">体験ガイドで始め方を見る<span class="meta">画像入り</span></div>
+      <div class="de">スマホでの始め方をQRとスクリーンショット付きで解説。体験用のログイン情報（符号 worker-test ／ パスコード canpass）もここに載っています。</div></a>
+    </div></div>
+
+    <div class="step">
+      <div class="no">3</div><div class="body">
+      <a class="card" href="https://worker-app-sooty.vercel.app" target="_blank" rel="noopener"><div class="ti">▶ アプリを実際に触る<span class="meta">スマホOK</span></div>
+      <div class="de">「やりたいこと」を書くとAIが手伝い、作業の記録が自動でたまります。体調の記録と連動したおすすめも体験できます。</div></a>
+    </div></div>
+
+    <div class="step">
+      <div class="no">4</div><div class="body">
+      <a class="card" href="worker-app-faq.html"><div class="ti">よくある質問を読む</div>
+      <div class="de">「Claude（AI）を持っていなくても使える？」「お金はかかる？」「体調が悪い日は？」——はじめる前の不安に答えます。</div></a>
+    </div></div>
+
+    <div class="step opt">
+      <div class="no">＋</div><div class="body">
+      <a class="card" href="worker-app-architecture.html"><div class="ti">しくみも知りたい方へ（任意）</div>
+      <div class="de">AI・記録・プライバシーがどう守られているか、図解のしくみ仕様書（非エンジニア向け）で確認できます。</div></a>
+    </div></div>
+  </div>
+
+  <!-- PM向け順路 -->
+  <div class="route acc" id="for-pm">
+    <h2><span class="dot"></span>PM・運営メンバー候補の方向け ・ 運用を体験する順路</h2>
+    <div class="sub">現場（ワーカー側）を先に体験してから、管理側を見るのがおすすめです。</div>
+
+    <div class="step">
+      <div class="no">1</div><div class="body">
+      <a class="card" href="worker-app-guide.html"><div class="ti">まずワーカー側を体験する<span class="meta">スマホOK</span></div>
+      <div class="de">体験ガイドにそってワーカーアプリを触ると、あなたが預かる「現場」の実感がつかめます。</div></a>
+    </div></div>
+
+    <div class="step">
+      <div class="no">2</div><div class="body">
+      <a class="card" href="admin-guide.html"><div class="ti">管理画面の運用ガイドを読む<span class="meta">画像入り</span></div>
+      <div class="de">ワーカーの稼働・体調・タスクを1画面で把握し、無理のないアサインを判断する流れ。提案はAI、確定は人が行います。</div></a>
+    </div></div>
+
+    <div class="step">
+      <div class="no">3</div><div class="body">
+      <a class="card" href="https://worker-app-sooty.vercel.app/admin" target="_blank" rel="noopener"><div class="ti">▶ 管理画面を実際に触る<span class="pw">PW・管理者</span></div>
+      <div class="de">管理者パスコードはご案内の担当者から。PCでの利用がおすすめです（スマホでも閲覧できます）。</div></a>
+    </div></div>
+
+    <div class="step">
+      <div class="no">4</div><div class="body">
+      <a class="card" href="admin-architecture.html"><div class="ti">管理のしくみを知る<span class="meta">図解</span></div>
+      <div class="de">記録をどう集めて見せているか、プライバシーの守り方、低コストに保つ設計。図解のしくみ仕様書です。</div></a>
+    </div></div>
+
+    <div class="step opt">
+      <div class="no">＋</div><div class="body">
+      <a class="card" href="bpo-video.html"><div class="ti">顧客に見せる動画も確認（任意）<span class="meta">3分20秒</span><span class="pw">PW</span></div>
+      <div class="de">企業向けの紹介動画。顧客がCanPassをどう見るかを知っておくと、運用の全体像がつながります。</div></a>
+    </div></div>
+  </div>
+
+  <!-- 資料一覧 -->
+  <div class="all">
+    <h2>資料一覧</h2>
+    <div class="sub">順路を通らずに、個別の資料へ直接アクセスする場合はこちら。</div>
+    <div class="list">
+      <a class="mini" href="https://canpass.jp/" target="_blank" rel="noopener">CanPass 公式サイト<small>canpass.jp ・ どなたでも閲覧可</small></a>
+      <a class="mini" href="bpo-video.html">バックオフィスBPO 紹介動画<small>3分20秒 ・ AI音声＋画面実演 ・ PW</small></a>
+      <a class="mini" href="bpo-salessheet.html">バックオフィスBPO セールスシート<small>スライド13枚 ・ PPTX同梱 ・ PW</small></a>
+      <a class="mini" href="client-guide.html">顧客ワークスペース 画面デモ<small>企業側の画面 ・ 画像入りガイド</small></a>
+      <a class="mini" href="worker-app-guide.html">ワーカーアプリ 体験ガイド<small>スマホでの始め方 ・ 画像入り</small></a>
+      <a class="mini" href="worker-app-faq.html">ワーカーアプリ FAQ<small>はじめる前の不安に回答</small></a>
+      <a class="mini" href="worker-app-architecture.html">ワーカーアプリ しくみ仕様書<small>図解 ・ 非エンジニア向け</small></a>
+      <a class="mini" href="admin-guide.html">管理画面 運用ガイド<small>経営者・PM向け ・ 画像入り</small></a>
+      <a class="mini" href="admin-architecture.html">管理画面 しくみ仕様書<small>図解 ・ 非エンジニア向け</small></a>
+      <a class="mini" href="https://worker-app-sooty.vercel.app" target="_blank" rel="noopener">▶ ワーカーアプリを開く<small>体験用ログインは体験ガイド参照</small></a>
+      <a class="mini" href="https://worker-app-sooty.vercel.app/client/login" target="_blank" rel="noopener">▶ 顧客ワークスペースを開く<small>デモログイン ・ パスコードは担当者から</small></a>
+      <a class="mini" href="https://worker-app-sooty.vercel.app/admin" target="_blank" rel="noopener">▶ 管理画面を開く<small>管理者パスコードは担当者から</small></a>
     </div>
   </div>
 
-  <!-- デモ・体験 -->
-  <div class="sec">
-    <h2><span class="dot" style="background:var(--green)"></span>デモ・体験 <span class="pw open">体験可</span></h2>
-    <div class="sub">ワーカー向けアプリ（v0デモ）・スマホで体験できます</div>
-    <div class="grid">
-      <a class="card grn full" href="worker-app-guide.html"><div class="ti">ワーカーアプリ 体験ガイド（画像入り）</div><div class="de">スマホでの始め方をQR・スクショ付きで解説。最新版＝作業種別の2グループ表示・アサイン業務・体調連動おすすめ。符号 worker-test / パスコード canpass で体験</div></a>
-      <a class="card grn" href="worker-app-faq.html"><div class="ti">よくある質問（FAQ）</div><div class="de">「Claude無しでも使える？」など、はじめる前の不安に回答</div></a>
-      <a class="card grn" href="worker-app-architecture.html"><div class="ti">しくみ仕様書（非エンジニア向け）</div><div class="de">図解で解説。AIワークスペースの構成・記録・プライバシー・コスト</div></a>
-      <a class="card grn full" href="https://worker-app-sooty.vercel.app" target="_blank" rel="noopener"><div class="ti">▶ アプリを直接開く</div><div class="de">worker-app-sooty.vercel.app</div></a>
-    </div>
-  </div>
-
-  <!-- 管理・運用 -->
-  <div class="sec">
-    <h2><span class="dot"></span>管理・運用（経営者・PM向け） <span class="pw">PW・管理者</span></h2>
-    <div class="sub">ワーカーの稼働・体調・タスクを1画面で把握する管理画面（v0）。提案のみ・確定は人・符号運用（L3）。</div>
-    <div class="grid">
-      <a class="card" href="admin-guide.html"><div class="ti">管理画面 運用ガイド（画像入り）</div><div class="de">概要／ワーカー稼働／ヘルス見守り／タスク／アサイン提案／名簿・契約の使い方</div></a>
-      <a class="card" href="admin-architecture.html"><div class="ti">しくみ仕様書（非エンジニア向け）</div><div class="de">図解で解説。記録ノートを読んで見せる構成・アサイン提案・プライバシー・コスト</div></a>
-      <a class="card full" href="https://worker-app-sooty.vercel.app/admin" target="_blank" rel="noopener"><div class="ti">▶ 管理画面を直接開く</div><div class="de">worker-app-sooty.vercel.app/admin ・ 管理者パスコードが必要（別途共有）</div></a>
-    </div>
-  </div>
-
-  <!-- 顧客ワークスペース（企業側） -->
-  <div class="sec">
-    <h2><span class="dot"></span>顧客ワークスペース（企業側・デモ） <span class="pw">PW・デモ</span></h2>
-    <div class="sub">CanPassに委託する企業側の画面（v0）。委託・進捗・成果物・請求・SaaS連携を1画面で。自社案件のみ・担い手の個人情報は非表示。</div>
-    <div class="grid">
-      <a class="card" href="client-guide.html"><div class="ti">顧客画面 デモ（画像入り）</div><div class="de">ホーム／委託する／進捗・詳細／成果物受領／請求／マネーフォワード連携の画面デモ</div></a>
-      <a class="card full" href="https://worker-app-sooty.vercel.app/client/login" target="_blank" rel="noopener"><div class="ti">▶ 顧客ワークスペースを直接開く</div><div class="de">worker-app-sooty.vercel.app/client/login ・ デモ keiri@example.co.jp ／ パスコード別途共有</div></a>
-    </div>
-  </div>
-
-  <!-- BPOセールス資料 -->
-  <div class="sec">
-    <h2><span class="dot"></span>BPOセールス資料 <span class="pw">PW</span></h2>
-    <div class="sub">営業先向け（パスワードは別途共有）</div>
-    <div class="grid">
-      <a class="card full" href="bpo-salessheet.html"><div class="ti">バックオフィスBPO セールスシート（スライド版）</div><div class="de">経理を主力にバックオフィスを委託。SaaS連携（マネーフォワード/freee/SmartHR）の全体像・API状況・つなぎ方2通り（API自動連携／代理ログイン）・顧客ワークスペースの画面イメージ。全13枚・PPTX同梱。</div></a>
-      <a class="card grn full" href="bpo-video.html"><div class="ti">▶ バックオフィスBPO 紹介動画（AI音声＋実演）</div><div class="de">3分31秒。スライドにAI音声ナレーションを付け、ワークスペースが動く様子を実演（企業側モック／ワーカー・管理は実アプリ）。画面の氏名・実データは非表示（符号のみ・見本データ）。</div></a>
-    </div>
-    <div class="sub" style="margin-top:8px;">※ 事業計画・収益モデル等の経営・出資向け資料は関係者限定ポータルに移設しました（URLは別途共有）。</div>
-  </div>
+  <a class="top" href="#">↑ 目的の選択に戻る</a>
 
   <div class="foot">
-    2026 ／ i CanPass ・ Re:Work / Re:Work AI ・ デモ・営業先共有用<br>
-    ※ 限定URL＋PWは "推測されにくい・JSゲート" であり真のアクセス制御ではありません。医療系の生データ・実名・原本は各リポジトリに含めません（符号運用）。経営・出資向けの機微資料は本サイトには置きません。
+    © 2026 i CanPass ・ 本サイトはデモ・ご案内用です。<br>
+    ※ 画面・資料に登場する氏名やデータはすべて見本です。実在の個人情報・顧客データは含まれません。パスワード付き資料の再配布はご遠慮ください。
   </div>
 </div>
 </body></html>
