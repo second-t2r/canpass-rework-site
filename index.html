@@ -4,6 +4,20 @@
 <meta name="robots" content="noindex,nofollow,noarchive">
 <title>CanPass ・ 体験ポータル</title>
 <link rel="stylesheet" href="portal.css">
+<style>
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 18px;}
+  .tab{font:700 13px/1.2 -apple-system,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;color:var(--gray);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:9px 16px;cursor:pointer;transition:.12s;}
+  .tab:hover{border-color:var(--brand);color:var(--navy);}
+  .tab.on{background:var(--navy);color:#fff;border-color:var(--navy);}
+  a.mini.hide{display:none;}
+  .all h2{font-size:17px;margin-bottom:2px;}
+  .vhero{display:flex;align-items:center;gap:14px;text-decoration:none;margin-top:20px;background:linear-gradient(135deg,#1E5BC6,#11243B);color:#fff;border-radius:14px;padding:16px 20px;box-shadow:0 6px 18px rgba(17,36,59,.22);transition:.15s;}
+  .vhero:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(17,36,59,.30);}
+  .vhero .vp{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;font-size:15px;flex:none;}
+  .vhero .vt{font-size:15px;font-weight:800;}
+  .vhero .vs{font-size:11.5px;color:#d5e0f0;margin-top:2px;}
+  .vhero .vg{margin-left:auto;font-size:12.5px;font-weight:800;white-space:nowrap;}
+</style>
 </head><body>
 <div class="wrap">
 
@@ -19,6 +33,13 @@
     CanPass のBPO（バックオフィス業務の委託サービス）を、資料と動くデモで体験できるポータルです。<br>
     あてはまる入口を選ぶと、見る順番にそって資料とデモをご案内します。<span class="pw">PW</span> 付きの資料のパスワードは、ご案内の担当者からお受け取りください。
   </div>
+
+  <!-- 紹介動画への直接入口 -->
+  <a class="vhero" href="bpo-video.html">
+    <div class="vp">▶</div>
+    <div><div class="vt">バックオフィスBPO 紹介動画</div><div class="vs">3分31秒 ・ AI音声＋画面実演。まずはこれで全体像がつかめます（PW）。</div></div>
+    <div class="vg">動画を見る →</div>
+  </a>
 
   <!-- 目的セレクタ（各順路ページへ） -->
   <div class="pick">
@@ -39,23 +60,33 @@
     </a>
   </div>
 
-  <!-- 資料一覧 -->
+  <!-- 資料一覧（カテゴリタブで絞り込み） -->
   <div class="all">
     <h2>資料一覧</h2>
-    <div class="sub">順路を通らずに、個別の資料へ直接アクセスする場合はこちら。</div>
+    <div class="sub">見たい種類を選ぶと、その資料が表示されます。</div>
+    <div class="tabs">
+      <button class="tab" data-cat="all">すべて</button>
+      <button class="tab" data-cat="sales">セールスシート</button>
+      <button class="tab" data-cat="product">プロダクト</button>
+      <button class="tab" data-cat="ops">運用・管理</button>
+      <button class="tab" data-cat="ext">外部サイト</button>
+    </div>
     <div class="list">
-      <a class="mini" href="https://canpass.jp/" target="_blank" rel="noopener">CanPass 公式サイト<small>canpass.jp ・ どなたでも閲覧可</small></a>
-      <a class="mini" href="bpo-video.html">バックオフィスBPO 紹介動画<small>3分31秒 ・ AI音声＋画面実演 ・ PW</small></a>
-      <a class="mini" href="bpo-salessheet.html">バックオフィスBPO セールスシート<small>スライド13枚 ・ PPTX同梱 ・ PW</small></a>
-      <a class="mini" href="client-guide.html">顧客ワークスペース 画面デモ<small>企業側の画面 ・ 画像入りガイド</small></a>
-      <a class="mini" href="worker-app-guide.html">ワーカーアプリ 体験ガイド<small>スマホでの始め方 ・ 画像入り</small></a>
-      <a class="mini" href="worker-app-faq.html">ワーカーアプリ FAQ<small>はじめる前の不安に回答</small></a>
-      <a class="mini" href="worker-app-architecture.html">ワーカーアプリ しくみ仕様書<small>図解 ・ 非エンジニア向け</small></a>
-      <a class="mini" href="admin-guide.html">管理画面 運用ガイド<small>経営者・PM向け ・ 画像入り</small></a>
-      <a class="mini" href="admin-architecture.html">管理画面 しくみ仕様書<small>図解 ・ 非エンジニア向け</small></a>
-      <a class="mini" href="https://worker-app-sooty.vercel.app" target="_blank" rel="noopener">▶ ワーカーアプリを開く<small>体験用ログインは体験ガイド参照</small></a>
-      <a class="mini" href="https://worker-app-sooty.vercel.app/client/login" target="_blank" rel="noopener">▶ 顧客ワークスペースを開く<small>デモログイン ・ パスコードは担当者から</small></a>
-      <a class="mini" href="https://worker-app-sooty.vercel.app/admin" target="_blank" rel="noopener">▶ 管理画面を開く<small>管理者パスコードは担当者から</small></a>
+      <a class="mini" data-cat="sales" href="bpo-video.html">バックオフィスBPO 紹介動画<small>3分31秒 ・ AI音声＋画面実演 ・ PW</small></a>
+      <a class="mini" data-cat="sales" href="bpo-salessheet.html">バックオフィスBPO セールスシート<small>スライド13枚 ・ PPTX同梱 ・ PW</small></a>
+
+      <a class="mini" data-cat="product" href="client-guide.html">顧客ワークスペース 画面デモ<small>企業側の画面 ・ 画像入りガイド</small></a>
+      <a class="mini" data-cat="product" href="worker-app-guide.html">ワーカーアプリ 体験ガイド<small>スマホでの始め方 ・ 画像入り</small></a>
+      <a class="mini" data-cat="product" href="worker-app-faq.html">ワーカーアプリ FAQ<small>はじめる前の不安に回答</small></a>
+      <a class="mini" data-cat="product" href="worker-app-architecture.html">ワーカーアプリ しくみ仕様書<small>図解 ・ 非エンジニア向け</small></a>
+      <a class="mini" data-cat="product" href="https://worker-app-sooty.vercel.app" target="_blank" rel="noopener">▶ ワーカーアプリを開く<small>体験用ログインは体験ガイド参照</small></a>
+      <a class="mini" data-cat="product" href="https://worker-app-sooty.vercel.app/client/login" target="_blank" rel="noopener">▶ 顧客ワークスペースを開く<small>デモログイン ・ パスコードは担当者から</small></a>
+
+      <a class="mini" data-cat="ops" href="admin-guide.html">管理画面 運用ガイド<small>経営者・PM向け ・ 画像入り</small></a>
+      <a class="mini" data-cat="ops" href="admin-architecture.html">管理画面 しくみ仕様書<small>図解 ・ 非エンジニア向け</small></a>
+      <a class="mini" data-cat="ops" href="https://worker-app-sooty.vercel.app/admin" target="_blank" rel="noopener">▶ 管理画面を開く<small>管理者パスコードは担当者から</small></a>
+
+      <a class="mini" data-cat="ext" href="https://canpass.jp/" target="_blank" rel="noopener">CanPass 公式サイト<small>canpass.jp ・ どなたでも閲覧可</small></a>
     </div>
   </div>
 
@@ -64,4 +95,19 @@
     ※ 画面・資料に登場する氏名やデータはすべて見本です。実在の個人情報・顧客データは含まれません。パスワード付き資料の再配布はご遠慮ください。
   </div>
 </div>
+<script>
+(function(){
+  var tabs=[].slice.call(document.querySelectorAll('.tab'));
+  var cards=[].slice.call(document.querySelectorAll('.list a.mini'));
+  function sel(cat){
+    tabs.forEach(function(t){t.classList.toggle('on',t.getAttribute('data-cat')===cat);});
+    cards.forEach(function(c){
+      var show=(cat==='all')||(c.getAttribute('data-cat')===cat);
+      c.classList.toggle('hide',!show);
+    });
+  }
+  tabs.forEach(function(t){t.addEventListener('click',function(){sel(t.getAttribute('data-cat'));});});
+  sel('all');
+})();
+</script>
 </body></html>
